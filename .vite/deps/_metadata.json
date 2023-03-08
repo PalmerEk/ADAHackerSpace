@@ -1,0 +1,155 @@
+{
+  "hash": "35d1ff1c",
+  "browserHash": "5d3142e5",
+  "optimized": {
+    "gun": {
+      "src": "../../node_modules/gun/browser.js",
+      "file": "gun.js",
+      "fileHash": "b05b6aa6",
+      "needsInterop": true
+    },
+    "gun/gun": {
+      "src": "../../node_modules/gun/gun.js",
+      "file": "gun_gun.js",
+      "fileHash": "8a93b1b5",
+      "needsInterop": true
+    },
+    "gun/sea": {
+      "src": "../../node_modules/gun/sea.js",
+      "file": "gun_sea.js",
+      "fileHash": "16e4a981",
+      "needsInterop": true
+    },
+    "gun/sea.js": {
+      "src": "../../node_modules/gun/sea.js",
+      "file": "gun_sea__js.js",
+      "fileHash": "bd15976e",
+      "needsInterop": true
+    },
+    "gun/lib/then": {
+      "src": "../../node_modules/gun/lib/then.js",
+      "file": "gun_lib_then.js",
+      "fileHash": "35158522",
+      "needsInterop": true
+    },
+    "gun/lib/webrtc": {
+      "src": "../../node_modules/gun/lib/webrtc.js",
+      "file": "gun_lib_webrtc.js",
+      "fileHash": "5b5188f9",
+      "needsInterop": true
+    },
+    "gun/lib/radix": {
+      "src": "../../node_modules/gun/lib/radix.js",
+      "file": "gun_lib_radix.js",
+      "fileHash": "21162d2e",
+      "needsInterop": true
+    },
+    "gun/lib/radisk": {
+      "src": "../../node_modules/gun/lib/radisk.js",
+      "file": "gun_lib_radisk.js",
+      "fileHash": "473b178c",
+      "needsInterop": true
+    },
+    "gun/lib/store": {
+      "src": "../../node_modules/gun/lib/store.js",
+      "file": "gun_lib_store.js",
+      "fileHash": "e7642273",
+      "needsInterop": true
+    },
+    "gun/lib/rindexed": {
+      "src": "../../node_modules/gun/lib/rindexed.js",
+      "file": "gun_lib_rindexed.js",
+      "fileHash": "f303dc5b",
+      "needsInterop": true
+    },
+    "vue": {
+      "src": "../../node_modules/vue/dist/vue.runtime.esm-bundler.js",
+      "file": "vue.js",
+      "fileHash": "7fba58b4",
+      "needsInterop": false
+    },
+    "vue-router": {
+      "src": "../../node_modules/vue-router/dist/vue-router.mjs",
+      "file": "vue-router.js",
+      "fileHash": "711f9b50",
+      "needsInterop": false
+    },
+    "slugify": {
+      "src": "../../node_modules/slugify/slugify.js",
+      "file": "slugify.js",
+      "fileHash": "d1523011",
+      "needsInterop": true
+    },
+    "@nuxt/content/transformers/markdown": {
+      "src": "../../node_modules/@nuxt/content/dist/runtime/transformers/markdown.mjs",
+      "file": "@nuxt_content_transformers_markdown.js",
+      "fileHash": "237e185c",
+      "needsInterop": false
+    },
+    "@emurgo/cardano-serialization-lib-browser/cardano_serialization_lib": {
+      "src": "../../node_modules/@emurgo/cardano-serialization-lib-browser/cardano_serialization_lib.js",
+      "file": "@emurgo_cardano-serialization-lib-browser_cardano_serialization_lib.js",
+      "fileHash": "0e47302c",
+      "needsInterop": false
+    },
+    "buffer": {
+      "src": "../../node_modules/buffer/index.js",
+      "file": "buffer.js",
+      "fileHash": "6ae724e5",
+      "needsInterop": true
+    },
+    "flowbite": {
+      "src": "../../node_modules/flowbite/lib/esm/index.js",
+      "file": "flowbite.js",
+      "fileHash": "31d758c5",
+      "needsInterop": false
+    },
+    "@heroicons/vue/outline": {
+      "src": "../../node_modules/@heroicons/vue/outline/index.js",
+      "file": "@heroicons_vue_outline.js",
+      "fileHash": "8e4f4d5d",
+      "needsInterop": true
+    },
+    "@heroicons/vue/20/solid": {
+      "src": "../../node_modules/@heroicons/vue/20/solid/index.js",
+      "file": "@heroicons_vue_20_solid.js",
+      "fileHash": "d82b689d",
+      "needsInterop": true
+    },
+    "@heroicons/vue/24/outline": {
+      "src": "../../node_modules/@heroicons/vue/24/outline/index.js",
+      "file": "@heroicons_vue_24_outline.js",
+      "fileHash": "1da5fe1d",
+      "needsInterop": true
+    }
+  },
+  "chunks": {
+    "chunk-4RDNWSUA": {
+      "file": "chunk-4RDNWSUA.js"
+    },
+    "chunk-NQWQDQKG": {
+      "file": "chunk-NQWQDQKG.js"
+    },
+    "chunk-7WUTZEDU": {
+      "file": "chunk-7WUTZEDU.js"
+    },
+    "chunk-HZNVQYWU": {
+      "file": "chunk-HZNVQYWU.js"
+    },
+    "chunk-DRMW4Y32": {
+      "file": "chunk-DRMW4Y32.js"
+    },
+    "chunk-FNY6V7FO": {
+      "file": "chunk-FNY6V7FO.js"
+    },
+    "chunk-DC2GYHRT": {
+      "file": "chunk-DC2GYHRT.js"
+    },
+    "chunk-CDMFTHRR": {
+      "file": "chunk-CDMFTHRR.js"
+    },
+    "chunk-TFWDKVI3": {
+      "file": "chunk-TFWDKVI3.js"
+    }
+  }
+}
