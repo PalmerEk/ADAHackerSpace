@@ -4,54 +4,26 @@
 	});
 
 	const route = useRoute();
-	const { isReady, getLesson } = useLessons();
-
-	const currentStep = ref(null);
-	const steps = ref([]);
-
-	const setLesson = async () => {
-		console.log(route.params.id);
-		const syllabus = getLesson(route.params.id);
-		const { steps: lessonSteps, getStep } = await useLesson(syllabus);
-		steps.value = lessonSteps.value;
-
-		currentStep.value = await getStep(0);
-	};
-
-	if (isReady.value) {
-		setLesson();
-	} else {
-		watch(
-			() => isReady.value,
-			(val) => {
-				if (val) {
-					setLesson();
-				}
-			}
-		);
-	}
+	const { isLoading, getLesson } = useLessons();
+	const lesson = await getLesson(route.params.id);
 </script>
 
 <template>
+	<!-- Should we require an overview page instead of first step?  I think so-->
 	<main>
-		<div v-if="currentStep">
-			<h2>What you'll Learn</h2>
-			<hr />
+		<div>
 			<div class="flex flex-row">
-				<article class="prose basis-12/12 p-8 max-w-[100%]">
-					<ContentRenderer v-if="currentStep" :value="currentStep">
-						<ContentRendererMarkdown :value="currentStep" :excerpt="true" />
+				<div class="basis-4/12">
+					<TOC :lesson="lesson" :section="0" :step="0" />
+				</div>
+
+				<article class="prose basis-8/12 p-8 max-w-[100%]">
+					<h1>{{ lesson.docket.sections[0].title }}</h1>
+					<ContentRenderer :value="lesson.docket.sections[0].steps[0]">
+						<ContentRendererMarkdown :value="lesson.docket.sections[0].steps[0]" :excerpt="true" />
 					</ContentRenderer>
 				</article>
 			</div>
-
-			<h3>How it goes</h3>
-			<hr />
-			TODO: List of steps
-
-			<h2>What you'll Get</h2>
-			TODO: Rewards
-			<hr />
 		</div>
 	</main>
 

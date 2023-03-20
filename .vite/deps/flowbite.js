@@ -3135,6 +3135,18 @@ var Tooltip = (
           };
       }
     };
+    Tooltip2.prototype._setupKeydownListener = function() {
+      var _this = this;
+      this._keydownEventListener = function(ev) {
+        if (ev.key === "Escape") {
+          _this.hide();
+        }
+      };
+      document.body.addEventListener("keydown", this._keydownEventListener, true);
+    };
+    Tooltip2.prototype._removeKeydownListener = function() {
+      document.body.removeEventListener("keydown", this._keydownEventListener, true);
+    };
     Tooltip2.prototype._setupClickOutsideListener = function() {
       var _this = this;
       this._clickOutsideEventListener = function(ev) {
@@ -3170,6 +3182,7 @@ var Tooltip = (
         ], false) });
       });
       this._setupClickOutsideListener();
+      this._setupKeydownListener();
       this._popperInstance.update();
       this._visible = true;
       this._options.onShow(this);
@@ -3183,6 +3196,7 @@ var Tooltip = (
         ], false) });
       });
       this._removeClickOutsideListener();
+      this._removeKeydownListener();
       this._visible = false;
       this._options.onHide(this);
     };
@@ -3335,6 +3349,18 @@ var Popover = (
           };
       }
     };
+    Popover2.prototype._setupKeydownListener = function() {
+      var _this = this;
+      this._keydownEventListener = function(ev) {
+        if (ev.key === "Escape") {
+          _this.hide();
+        }
+      };
+      document.body.addEventListener("keydown", this._keydownEventListener, true);
+    };
+    Popover2.prototype._removeKeydownListener = function() {
+      document.body.removeEventListener("keydown", this._keydownEventListener, true);
+    };
     Popover2.prototype._setupClickOutsideListener = function() {
       var _this = this;
       this._clickOutsideEventListener = function(ev) {
@@ -3371,6 +3397,7 @@ var Popover = (
         ], false) });
       });
       this._setupClickOutsideListener();
+      this._setupKeydownListener();
       this._popperInstance.update();
       this._visible = true;
       this._options.onShow(this);
@@ -3384,6 +3411,7 @@ var Popover = (
         ], false) });
       });
       this._removeClickOutsideListener();
+      this._removeKeydownListener();
       this._visible = false;
       this._options.onHide(this);
     };
@@ -3559,6 +3587,21 @@ function initDials() {
 }
 var dial_default = Dial;
 
+// node_modules/flowbite/lib/esm/components/index.js
+function initFlowbite() {
+  initAccordions();
+  initCollapses();
+  initCarousels();
+  initDismisses();
+  initDropdowns();
+  initModals();
+  initDrawers();
+  initTabs();
+  initTooltips();
+  initPopovers();
+  initDials();
+}
+
 // node_modules/flowbite/lib/esm/index.js
 var events = new events_default("load", [
   initAccordions,
@@ -3593,6 +3636,7 @@ export {
   initDismisses,
   initDrawers,
   initDropdowns,
+  initFlowbite,
   initModals,
   initPopovers,
   initTabs,

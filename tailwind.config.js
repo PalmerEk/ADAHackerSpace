@@ -1,13 +1,18 @@
+const formKitTailwind = require("@formkit/themes/tailwindcss");
+
 module.exports = {
 	content: [
+		"./src/**/*.{html,vue,js}",
 		"./components/**/*.{js,vue,ts}",
 		"./layouts/**/*.vue",
 		"./pages/**/*.vue",
 		"./plugins/**/*.{js,ts}",
 		"./nuxt.config.{js,ts}",
 		"./node_modules/flowbite.{js,ts}",
+		"./formkit.config.{js,ts}",
+		"./node_modules/@formkit/themes/dist/tailwindcss/genesis/index.{cjs,mjs}",
 	],
-	plugins: [require("@tailwindcss/typography"), require("tw-elements/dist/plugin"), require("flowbite")],
+	plugins: [require("@tailwindcss/typography"), require("tw-elements/dist/plugin"), require("flowbite"), formKitTailwind],
 	darkMode: "media",
 	safelist: [
 		"bg-danger-100",

@@ -1,131 +1,170 @@
 {
-  "hash": "35d1ff1c",
-  "browserHash": "5d3142e5",
+  "hash": "902dd599",
+  "browserHash": "11ff3505",
   "optimized": {
     "gun": {
       "src": "../../node_modules/gun/browser.js",
       "file": "gun.js",
-      "fileHash": "b05b6aa6",
+      "fileHash": "e5f399a1",
       "needsInterop": true
     },
     "gun/gun": {
       "src": "../../node_modules/gun/gun.js",
       "file": "gun_gun.js",
-      "fileHash": "8a93b1b5",
+      "fileHash": "79230615",
       "needsInterop": true
     },
     "gun/sea": {
       "src": "../../node_modules/gun/sea.js",
       "file": "gun_sea.js",
-      "fileHash": "16e4a981",
+      "fileHash": "1a553613",
       "needsInterop": true
     },
     "gun/sea.js": {
       "src": "../../node_modules/gun/sea.js",
       "file": "gun_sea__js.js",
-      "fileHash": "bd15976e",
+      "fileHash": "98dbe909",
       "needsInterop": true
     },
     "gun/lib/then": {
       "src": "../../node_modules/gun/lib/then.js",
       "file": "gun_lib_then.js",
-      "fileHash": "35158522",
+      "fileHash": "d47cb1de",
       "needsInterop": true
     },
     "gun/lib/webrtc": {
       "src": "../../node_modules/gun/lib/webrtc.js",
       "file": "gun_lib_webrtc.js",
-      "fileHash": "5b5188f9",
+      "fileHash": "3302ac69",
       "needsInterop": true
     },
     "gun/lib/radix": {
       "src": "../../node_modules/gun/lib/radix.js",
       "file": "gun_lib_radix.js",
-      "fileHash": "21162d2e",
+      "fileHash": "5e6593e6",
       "needsInterop": true
     },
     "gun/lib/radisk": {
       "src": "../../node_modules/gun/lib/radisk.js",
       "file": "gun_lib_radisk.js",
-      "fileHash": "473b178c",
+      "fileHash": "c1d111f9",
       "needsInterop": true
     },
     "gun/lib/store": {
       "src": "../../node_modules/gun/lib/store.js",
       "file": "gun_lib_store.js",
-      "fileHash": "e7642273",
+      "fileHash": "e5137fab",
       "needsInterop": true
     },
     "gun/lib/rindexed": {
       "src": "../../node_modules/gun/lib/rindexed.js",
       "file": "gun_lib_rindexed.js",
-      "fileHash": "f303dc5b",
+      "fileHash": "56a64d09",
       "needsInterop": true
     },
     "vue": {
       "src": "../../node_modules/vue/dist/vue.runtime.esm-bundler.js",
       "file": "vue.js",
-      "fileHash": "7fba58b4",
+      "fileHash": "2092132b",
       "needsInterop": false
     },
     "vue-router": {
       "src": "../../node_modules/vue-router/dist/vue-router.mjs",
       "file": "vue-router.js",
-      "fileHash": "711f9b50",
+      "fileHash": "b411debf",
       "needsInterop": false
     },
     "slugify": {
       "src": "../../node_modules/slugify/slugify.js",
       "file": "slugify.js",
-      "fileHash": "d1523011",
+      "fileHash": "68eff856",
       "needsInterop": true
     },
-    "@nuxt/content/transformers/markdown": {
-      "src": "../../node_modules/@nuxt/content/dist/runtime/transformers/markdown.mjs",
-      "file": "@nuxt_content_transformers_markdown.js",
-      "fileHash": "237e185c",
+    "@formkit/vue": {
+      "src": "../../node_modules/@formkit/vue/dist/index.mjs",
+      "file": "@formkit_vue.js",
+      "fileHash": "0877053a",
       "needsInterop": false
     },
-    "@emurgo/cardano-serialization-lib-browser/cardano_serialization_lib": {
-      "src": "../../node_modules/@emurgo/cardano-serialization-lib-browser/cardano_serialization_lib.js",
-      "file": "@emurgo_cardano-serialization-lib-browser_cardano_serialization_lib.js",
-      "fileHash": "0e47302c",
+    "@formkit/core": {
+      "src": "../../node_modules/@formkit/core/dist/index.mjs",
+      "file": "@formkit_core.js",
+      "fileHash": "e898a9d6",
       "needsInterop": false
     },
-    "buffer": {
-      "src": "../../node_modules/buffer/index.js",
-      "file": "buffer.js",
-      "fileHash": "6ae724e5",
+    "@formkit/themes": {
+      "src": "../../node_modules/@formkit/themes/dist/index.mjs",
+      "file": "@formkit_themes.js",
+      "fileHash": "ad0820dd",
+      "needsInterop": false
+    },
+    "@formkit/icons": {
+      "src": "../../node_modules/@formkit/icons/dist/index.mjs",
+      "file": "@formkit_icons.js",
+      "fileHash": "1b88cf66",
+      "needsInterop": false
+    },
+    "@formkit/themes/tailwindcss/genesis": {
+      "src": "../../node_modules/@formkit/themes/dist/tailwindcss/genesis/index.mjs",
+      "file": "@formkit_themes_tailwindcss_genesis.js",
+      "fileHash": "41e599d4",
+      "needsInterop": false
+    },
+    "@hyperionbt/helios": {
+      "src": "../../node_modules/@hyperionbt/helios/helios.js",
+      "file": "@hyperionbt_helios.js",
+      "fileHash": "fd97c599",
+      "needsInterop": false
+    },
+    "@formkit/utils": {
+      "src": "../../node_modules/@formkit/utils/dist/index.mjs",
+      "file": "@formkit_utils.js",
+      "fileHash": "7b17fbec",
+      "needsInterop": false
+    },
+    "@heroicons/vue/24/outline": {
+      "src": "../../node_modules/@heroicons/vue/24/outline/index.js",
+      "file": "@heroicons_vue_24_outline.js",
+      "fileHash": "d8d6b096",
       "needsInterop": true
     },
     "flowbite": {
       "src": "../../node_modules/flowbite/lib/esm/index.js",
       "file": "flowbite.js",
-      "fileHash": "31d758c5",
+      "fileHash": "2f623317",
       "needsInterop": false
-    },
-    "@heroicons/vue/outline": {
-      "src": "../../node_modules/@heroicons/vue/outline/index.js",
-      "file": "@heroicons_vue_outline.js",
-      "fileHash": "8e4f4d5d",
-      "needsInterop": true
     },
     "@heroicons/vue/20/solid": {
       "src": "../../node_modules/@heroicons/vue/20/solid/index.js",
       "file": "@heroicons_vue_20_solid.js",
-      "fileHash": "d82b689d",
+      "fileHash": "5cc056dc",
       "needsInterop": true
     },
-    "@heroicons/vue/24/outline": {
-      "src": "../../node_modules/@heroicons/vue/24/outline/index.js",
-      "file": "@heroicons_vue_24_outline.js",
-      "fileHash": "1da5fe1d",
+    "@emurgo/cardano-serialization-lib-browser/cardano_serialization_lib": {
+      "src": "../../node_modules/@emurgo/cardano-serialization-lib-browser/cardano_serialization_lib.js",
+      "file": "@emurgo_cardano-serialization-lib-browser_cardano_serialization_lib.js",
+      "fileHash": "17e4416e",
+      "needsInterop": false
+    },
+    "buffer": {
+      "src": "../../node_modules/buffer/index.js",
+      "file": "buffer.js",
+      "fileHash": "9b78e1b2",
       "needsInterop": true
+    },
+    "@nuxt/content/transformers/markdown": {
+      "src": "../../node_modules/@nuxt/content/dist/runtime/transformers/markdown.mjs",
+      "file": "@nuxt_content_transformers_markdown.js",
+      "fileHash": "c64c0ef0",
+      "needsInterop": false
     }
   },
   "chunks": {
     "chunk-4RDNWSUA": {
       "file": "chunk-4RDNWSUA.js"
+    },
+    "chunk-HZNVQYWU": {
+      "file": "chunk-HZNVQYWU.js"
     },
     "chunk-NQWQDQKG": {
       "file": "chunk-NQWQDQKG.js"
@@ -133,8 +172,14 @@
     "chunk-7WUTZEDU": {
       "file": "chunk-7WUTZEDU.js"
     },
-    "chunk-HZNVQYWU": {
-      "file": "chunk-HZNVQYWU.js"
+    "chunk-ST7GHXHB": {
+      "file": "chunk-ST7GHXHB.js"
+    },
+    "chunk-FEVDK5IE": {
+      "file": "chunk-FEVDK5IE.js"
+    },
+    "chunk-MJNI3QTX": {
+      "file": "chunk-MJNI3QTX.js"
     },
     "chunk-DRMW4Y32": {
       "file": "chunk-DRMW4Y32.js"

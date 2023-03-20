@@ -1,9 +1,46 @@
-// import { TransactionUnspentOutput, Address, Value } from "@emurgo/cardano-serialization-lib-asmjs/cardano_serialization_lib";
+// TDOO: Consider just using helios library directly?
+//import { TransactionUnspentOutput, Address, Value } from "@emurgo/cardano-serialization-lib-asmjs/cardano_serialization_lib";
 import { TransactionUnspentOutput, Address, Value } from "@emurgo/cardano-serialization-lib-browser/cardano_serialization_lib";
+import { Cip30Wallet, WalletHelper } from "@hyperionbt/helios";
 import { Buffer } from "buffer";
 
 const ERROR_CLIENT_ONLY = new Error("Wallets not supported on server");
 const ERROR_NOT_AVAILABLE = new Error("Wallet not available");
+
+export const useNetwork = (net = "mainnet") => {
+	const PARAM_URLS = {
+		mainnet: "https://d1t0d7c2nekuk0.cloudfront.net/mainnet.json",
+		preprod: "https://d1t0d7c2nekuk0.cloudfront.net/preprod.json",
+		preview: "https://d1t0d7c2nekuk0.cloudfront.net/preview.json",
+	};
+
+	const networkParams = ref(undefined);
+	const isReady = ref(false);
+	const isLoading = ref(false);
+	const error = ref(undefined);
+
+	const init = async () => {
+		isLoading.value = true;
+		try {
+			networkParams.value = await $fetch(PARAM_URLS[net]);
+			isReady.value = true;
+		} catch (e) {
+			error.value = e;
+		} finally {
+			isLoading.value = false;
+		}
+	};
+
+	init();
+
+	return {
+		networkParams,
+
+		isReady,
+		isLoading,
+		error,
+	};
+};
 
 export const useWallets = () => {
 	const isReady = ref(false);
@@ -100,17 +137,24 @@ export const useWallet = (default_provider_key = "walletprovider", default_handl
 		const wallet = ref(null);
 		const api = ref(null);
 		const network_id = ref(null);
+		const testnet = ref("testnet");
 		const balance = ref(null);
 		const address = ref(null);
 		const ada_handles = ref([]);
+
+		// Helios
+		let heliosCip30Wallet = null;
+		let heliosWalletHelper = null;
 
 		// Computed
 		const isConnected = computed(() => api.value !== null);
 		const network = computed(() => {
 			if (network_id.value === null) return null;
-			// TODO: preview?  pre-production?
-			return network_id.value === 1 ? "mainnet" : "testnet";
+			if (network_id.value === 1) return "mainnet";
+
+			return testnet.value;
 		});
+
 		const currency_symbol = computed(() => {
 			if (network_id.value === null) return "";
 			return network_id.value === 1 ? "₳" : "t₳";
@@ -129,20 +173,25 @@ export const useWallet = (default_provider_key = "walletprovider", default_handl
 			wallet.value = null;
 			api.value = null;
 			network_id.value = null;
+			testnet.value = "testnet";
 			balance.value = null;
 			address.value = null;
 			ada_handles.value = [];
+
+			heliosCip30Wallet = null;
+			heliosWalletHelper = null;
 		};
 
 		// Wallet API
 		const connect = async (provider) => {
+			console.log("Connecting to wallet", provider);
 			disconnect();
 
 			wallet.value = SUPPORTED_WALLETS.filter((wallet) => wallet.provider === provider)[0];
 
 			if (wallet.value?.installed && window.cardano[wallet.value?.provider]) {
 				try {
-					api.value = await window.cardano[wallet.value?.provider].enable();
+					api.value = await window.cardano.eternl.enable();
 					// getNetworkId,
 					// getBalance,
 					// getUtxos,
@@ -154,13 +203,33 @@ export const useWallet = (default_provider_key = "walletprovider", default_handl
 					// signTx,
 					// submitTx,
 
-					localStorage.setItem(default_provider_key, provider);
+					heliosCip30Wallet = new Cip30Wallet(api.value);
+					//submitTx,
+					//isMainnet
+					//signTx
+					//utxos
+					//unusedAddresses
+					//usedAddresses
 
-					await Promise.all([fetchNetwork(), fetchFirstUsedAddress()]);
+					heliosWalletHelper = new WalletHelper(heliosCip30Wallet);
+					//allAddresses
+					//baseAddress
+					//changeAddress
+					//refUtxo
+					//isOwnAddress
+					//isOwnPubKeyHash
+					//pickUtxos
+					//pickCollateral
+
+					localStorage.setItem(default_provider_key, provider);
 
 					// Don't wait for these
 					fetchBalance();
 					fetchADAHandles();
+					fetchNetwork();
+					fetchChangeAddress();
+
+					// await Promise.all([fetchNetwork(), fetchChangeAddress()]);
 				} catch (e) {
 					disconnect();
 					// TODO: Error: no account set
@@ -182,6 +251,17 @@ export const useWallet = (default_provider_key = "walletprovider", default_handl
 
 		const fetchNetwork = async () => {
 			network_id.value = await api.value?.getNetworkId();
+
+			// NOTE: Using heleos / blackfrost to do this for now
+			// I think I can ignore heleos wallet and just get the utxos myself in which case I'm down to blockfrost somehow?
+			if (network_id.value === 0) {
+				// TODO: just use the first utxo?
+				const refUtxo = await heliosWalletHelper.refUtxo;
+				if (refUtxo === null) testnet.value = "testnet"; // empty wallet, can't determine testnet
+
+				const txOnNetwork = await $fetch(`/api/network/sniff/${refUtxo.txId.hex}`);
+				testnet.value = txOnNetwork?.network || "testnet";
+			}
 		};
 
 		const fetchBalance = async () => {
@@ -193,6 +273,11 @@ export const useWallet = (default_provider_key = "walletprovider", default_handl
 		const fetchChangeAddress = async () => {
 			const cborAdress = await api.value?.getChangeAddress();
 			address.value = bech32FromHex(cborAdress);
+		};
+
+		// TODO: leaning on helios for this for now, but I think I can just get the utxos myself and sort them smallest to largest
+		const pickUtxos = async (amount) => {
+			return await heliosWalletHelper.pickUtxos(amount);
 		};
 
 		const fetchFirstUsedAddress = async () => {
@@ -337,6 +422,10 @@ export const useWallet = (default_provider_key = "walletprovider", default_handl
 			address: readonly(address),
 			ada_handles: readonly(ada_handles),
 			ada_handle: readonly(ada_handle),
+
+			fetchUTXOs,
+			fetchChangeAddress,
+			pickUtxos,
 
 			isReady: readonly(isReady),
 			isLoading: readonly(isLoading),

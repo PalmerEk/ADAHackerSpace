@@ -1,3 +1,7 @@
+---
+title: Let's ship some freaking NFTs on Solana
+---
+
 ## 💎 Let's ship some freaking NFTs on Solana
 
 ### 👋 Welcome

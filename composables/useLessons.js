@@ -1,118 +1,132 @@
-import { createGlobalState } from "@vueuse/core";
+import { createGlobalState, usePreferredLanguages } from "@vueuse/core";
 import markdownParser from "@nuxt/content/transformers/markdown";
 
 // This is all shit code, just trying to get something working
 
 export const useLessons = createGlobalState(() => {
-	const LESSON_POLICY_ID = "a890e508e5fb46eb1ad098043d3961d7ad5fc1662391b23a8a59e5e3";
+	const languages = usePreferredLanguages();
+	const language = ref("en");
 
 	const isReady = ref(false);
-	const isLoading = ref(false);
+	const isLoading = ref(0);
 	const error = ref(undefined);
 
+	const lessons = ref(null);
+
 	// TODO: Get this from the blockchain (based on the policy id)
-	const LESSON_URLS = ["/lessons/test1/syllabus.json"];
-	const lessons = ref([]);
-
 	// TODO, fetch lessons from the blockchain
-	// thought here is that lessons are created by whomever then submitted for approval
-	// once approved, an NFT is generated and sent to the creator.  That NFT contains a link to to syllabus (ipfs?)
-	// the syllabus contains the links to the lesson content, rewards, etc.
-	const init = async () => {
+	const fetchLessons = async () => {
 		error.value = undefined;
-		isReady.value = false;
-		isLoading.value = true;
+		isLoading.value++;
 
-		const requests = LESSON_URLS.map((url) => {
-			return fetch(url).then(function (response) {
-				return response.json();
-			});
-		});
-
-		// Resolve all the promises
-		Promise.all(requests)
-			.then((results) => {
-				lessons.value = results;
-				isReady.value = true;
-				isLoading.value = false;
+		// Grab the available lesson ids from the gateway
+		const lessonIds = await $fetch("/api/preview/lessons");
+		// Get the details of each lesson
+		const approvedLessons = await Promise.all(
+			lessonIds.map(async (id) => {
+				return await $fetch(`/api/preview/lessons/${id}`);
 			})
-			.catch((e) => {
-				console.log("error loading lessons", e);
-				error.value = e;
+		);
+
+		lessons.value = await Promise.all(
+			approvedLessons.map(async (lesson) => {
+				const docket = await fetch(lesson.docket).then((res) => res.json());
+				return { ...lesson, docket };
+			})
+		)
+			.catch((err) => {
+				error.value = err;
+			})
+			.finally(() => {
+				isLoading.value--;
 			});
 	};
 
-	const getLesson = (id) => {
-		return lessons.value.find((lesson) => lesson.id === id);
+	const fetchStepsContent = async (steps) => {
+		return await Promise.all(
+			steps.map(async (stepURL) => {
+				return await markdownParser.parse(stepURL, await $fetch(stepURL));
+			})
+		);
+	};
+
+	const getLesson = async (lesson_id) => {
+		isLoading.value++;
+		let lesson = null;
+		try {
+			if (!lessons.value) await fetchLessons();
+
+			lesson = lessons.value.find((lesson) => lesson.id === lesson_id);
+
+			// Determine the best available language based on the user's browser settings, default to english
+			language.value = languages.value.reduceRight((bestLang, lang) => {
+				if (lesson.docket.sections[0][lang.slice(0, 2)]) bestLang = lang.slice(0, 2);
+				return bestLang;
+			}, "en");
+
+			// update the docket to replace the sections with the content from the markdown files (in the correct language)
+			lesson.docket.sections = await Promise.all(
+				lesson.docket.sections.map(async (section) => {
+					// already loaded correct language.  This is somewhat iffy, probably should replace original section but instead add new content section
+					// but don't want rest of system to have to deal with languages as it's very unlikely the user will switch languages in the middle of a session
+					if (section[language.value]) return { title: section[language.value].title, steps: await fetchStepsContent(section[language.value].steps) };
+					return section;
+				})
+			);
+		} catch (err) {
+			error.value = err;
+		} finally {
+			isLoading.value--;
+			if (error.value) return null;
+			return lesson;
+		}
+	};
+
+	// get a specific step from a lesson (0 indexed)
+	const _getStep = async (lesson, absolute_step_number) => {
+		const result = { sectionIndx: 0, section: null, stepIndx: 0, content: null, absStepNumber: absolute_step_number };
+
+		let stepCount = 0;
+		for (let i = 0; i < lesson.docket.sections.length; i++) {
+			for (let j = 0; j < lesson.docket.sections[i].steps.length; j++) {
+				if (stepCount === absolute_step_number) {
+					result.sectionIndx = i;
+					result.stepIndx = j;
+					result.section = lesson.docket.sections[i];
+					result.content = result.section.steps[j];
+				}
+				stepCount++;
+			}
+		}
+
+		if (!result.content) return null;
+		return result;
+	};
+
+	const getStep = async (lesson, absolute_step_number) => {
+		const absStep = parseInt(absolute_step_number);
+		return {
+			step: await _getStep(lesson, absStep),
+			prevStep: await _getStep(lesson, absStep - 1),
+			nextStep: await _getStep(lesson, absStep + 1),
+		};
+	};
+
+	const init = async () => {
+		await fetchLessons();
 	};
 
 	init();
 
 	return {
 		lessons: readonly(lessons),
+		language: readonly(language),
 
 		getLesson,
+		getStep,
 
 		isReady,
 		isLoading,
 		error,
 	};
 });
-
-export const useLesson = (syllabus) =>
-	createGlobalState(async () => {
-		const isReady = ref(false);
-		const isLoading = ref(false);
-		const error = ref(undefined);
-
-		const lesson = ref({});
-		const steps = ref([]);
-
-		// if syllabus is a string, assume it's a URL
-		// if it's an object, assume it's the syllabus
-		// const syllabusURL = typeof syllabus === "string" ? syllabus : syllabus.url;
-
-		if (typeof syllabus === "string") {
-			lesson.value = (await fetch(syllabus)).json();
-		} else {
-			//lesson.value = { ...syllabus, overviewMD: await markdownParser.parse(syllabus.overview, await (await fetch(syllabus.overview)).text()) };
-			lesson.value = syllabus;
-		}
-
-		const init = async () => {
-			error.value = undefined;
-			isReady.value = true;
-			isLoading.value = false;
-		};
-
-		init();
-
-		const getStep = async (step) => {
-			if (typeof step !== "number") step = parseInt(step);
-
-			if (step >= lesson.value.steps.length) return null;
-			if (step < 0) return null;
-
-			if (steps.value[step]) return steps.value[step];
-
-			const stepURL = lesson.value.steps[step].source;
-
-			steps.value[step] = await markdownParser.parse(stepURL, await $fetch(stepURL));
-			steps.value[step].ordinal = step;
-			steps.value[step].prevStep = step > 0 ? await getStep(step - 1) : null;
-			steps.value[step].nextStep = step < lesson.value.steps.length ? await getStep(step + 1) : null;
-
-			return steps.value[step];
-		};
-
-		return {
-			lesson: readonly(lesson),
-
-			getStep,
-			steps,
-
-			isReady,
-			isLoading,
-			error,
-		};
-	})();

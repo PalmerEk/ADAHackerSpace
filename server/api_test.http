@@ -1,0 +1,14 @@
+### Determine network from txid
+GET http://localhost:3000/api/network/sniff/0542a41a63b17713b8106a6b78f4e666bcc51e337dde6d5132fa8d9773354046
+
+### Get available lesson ids
+GET http://localhost:3000/api/preview/lessons
+
+### get lesson details for a given id
+GET http://localhost:3000/api/preview/lessons/399ec202ff884644082034521272191847781fc65b7f562d49527fd15368697020616e204e465420436f6c6c656374696f6e206f6e20536f6c616e61
+
+### get information from specific network
+GET http://localhost:3000/api/preview/network
+
+### Error
+GET http://localhost:3000/api/preview/lessons/399ec202ff884644082034521272191847781fc65b7f562d49527fd15368697020616e204e465420436f6c6c656374696f6e206f6e20536f6c616e62

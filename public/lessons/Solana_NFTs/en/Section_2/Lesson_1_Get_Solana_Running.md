@@ -1,3 +1,7 @@
+---
+title: Get local Solana env running.
+---
+
 ### 🦾 What are we going to do?
 
 So — the goal is to create a web app that lets users **connect their wallet, click mint, and receive an NFT from our collection in their wallet.** Simple enough!
@@ -46,12 +50,13 @@ ts-node --version
 
 If any of these commands are not found, please make sure to install it before moving on.
 
-- [git Installation](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-- [node Installation](https://nodejs.org/en/download/)
-- [yarn Installation](https://classic.yarnpkg.com/lang/en/docs/install)
-- [ts-node Installation](https://www.npmjs.com/package/ts-node#installation)
+-   [git Installation](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+-   [node Installation](https://nodejs.org/en/download/)
+-   [yarn Installation](https://classic.yarnpkg.com/lang/en/docs/install)
+-   [ts-node Installation](https://www.npmjs.com/package/ts-node#installation)
 
 Be sure to install `ts-node` globally. I used this command: `npm install -g ts-node`
+
 > If you run into EACCES permissions error while installing, please checkout this [link](https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally)
 
 ### 🔥 Install Solana
@@ -60,7 +65,7 @@ The installation steps are pretty straight forward [here](https://docs.solana.c
 
 **Don't** worry about upgrading to the latest version of Solana. You can install the stable version by replacing the version number with "stable" like this: `sh -c "$(curl -sSfL https://release.solana.com/stable/install)"`
 
-*Note: Depending on your system — once you install Solana, it may output a message like "Please update your PATH environment variable" and it'll give you a line to copy and run. Go ahead and copy + run that command so your PATH gets setup properly.*
+_Note: Depending on your system — once you install Solana, it may output a message like "Please update your PATH environment variable" and it'll give you a line to copy and run. Go ahead and copy + run that command so your PATH gets setup properly._
 
 Once you're done installing, run this to make sure stuff is working:
 
@@ -96,6 +101,7 @@ Dang it! Solana can be rough to get working. We're happy to help though!! Post a
 Now that we have our Solana CLI installed, we'll need to install the Metaplex CLI which allows us to actually create our candy machine. You can follow the installation process [here](https://docs.metaplex.com/developer-tools/sugar/overview/installation)
 
 ### 🍬 Install Sugar
+
 ```plaintext
 1. sudo apt install libudev-dev pkg-config unzip
 2. bash <(curl -sSf https://sugar.metaplex.com/install.sh)
@@ -137,9 +143,9 @@ SUBCOMMANDS:
     verify            Verify uploaded data
     withdraw          Withdraw funds from candy machine account closing it
 ```
- 
+
 ### 🚨 Progress Report
 
-*Please do this else Farza will be sad :(*
+_Please do this else Farza will be sad :(_
 
 Post a screenshot in `#progress` of your terminal showing off the output of `solana config get`!

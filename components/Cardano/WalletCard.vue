@@ -18,6 +18,8 @@
 	};
 </script>
 
+<!-- TODO: Add link to explorer https://cardanoscan.io/address/${addr} (preview.cardanoscan.io / preprod.cardanoscan.io) -->
+<!-- TODO: Add copy address as well as handle?  Or maybe copy is always address (resolved handle) -->
 <template>
 	<div class="flex space-x-4">
 		<div class="flex shrink-0 h-[50px] w-[50px] items-center justify-center rounded-lg border border-gray-300 dark:border-dark-600">
@@ -40,7 +42,10 @@
 				</div>
 			</div>
 			<div class="section-address mt-1 flex items-center justify-between text-gray-500 dark:text-gray-400">
-				<span v-if="wallet.ada_handle">${{ wallet.ada_handle }}</span>
+				<span v-if="wallet.ada_handle"
+					>${{ wallet.ada_handle }}
+					<NuxtLink v-if="wallet.ada_handle === 'palmerek'" :to="'/admin'">Admin</NuxtLink>
+				</span>
 
 				<button
 					class="flex select-none items-center justify-center whitespace-nowrap leading-none font-normal transition duration-300 cursor-pointer border-none shadow-none h-[38px] text-sm leading-[16px] rounded-lg py-[11px] px-[13px] !h-[24px] !py-0"

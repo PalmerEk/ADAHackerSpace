@@ -44,6 +44,7 @@
 						</svg>
 					</NuxtLink>
 				</div>
+				<!-- <audio :src="`http://fast.citrus3.com:8532/stream`" controls></audio> -->
 				<div class="flex items-center lg:ml-auto">
 					<NuxtLink to="/examples">
 						<button

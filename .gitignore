@@ -1,8 +1,11 @@
 node_modules
 *.log*
 .nuxt
+.vite
+.npmrc
 .nitro
 .cache
 .output
 .env
 dist
+public/lessons

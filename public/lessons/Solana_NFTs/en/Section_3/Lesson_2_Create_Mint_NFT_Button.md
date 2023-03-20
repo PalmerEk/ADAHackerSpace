@@ -1,3 +1,7 @@
+---
+title: Create your 'Mint NFT' button.
+---
+
 It's time to finally mint our first NFT on Solana.
 
 At this point we are going to be calling our Candy Machine to mint a single NFT when someone clicks our button.
@@ -15,17 +19,15 @@ But lets look at some chunks of code:
 ```jsx
 const mint = web3.Keypair.generate();
 
-const userTokenAccountAddress = (
-  await getAtaForMint(mint.publicKey, walletAddress.publicKey)
-)[0];
+const userTokenAccountAddress = (await getAtaForMint(mint.publicKey, walletAddress.publicKey))[0];
 ```
 
 Here we're creating an account for our NFT. In Solana, programs are **stateless** which is very different from Ethereum where contracts hold state. Check out more on accounts [here](https://docs.solana.com/developing/programming-model/accounts).
 
 ```jsx
 const userPayingAccountAddress = candyMachine.state.tokenMint
-  ? (await getAtaForMint(candyMachine.state.tokenMint, walletAddress.publicKey))[0]
-  : walletAddress.publicKey;
+	? (await getAtaForMint(candyMachine.state.tokenMint, walletAddress.publicKey))[0]
+	: walletAddress.publicKey;
 
 const candyMachineAddress = candyMachine.id;
 const remainingAccounts = [];
@@ -36,28 +38,16 @@ Here's are all the params candy machine needs to mint the NFT. It needs everythi
 
 ```jsx
 const instructions = [
-  web3.SystemProgram.createAccount({
-    fromPubkey: walletAddress.publicKey,
-    newAccountPubkey: mint.publicKey,
-    space: MintLayout.span,
-    lamports: await candyMachine.program.provider.connection.getMinimumBalanceForRentExemption(MintLayout.span),
-    programId: TOKEN_PROGRAM_ID,
-  }),
-  createInitializeMintInstruction(
-    mint.publicKey,
-    0,
-    walletAddress.publicKey,
-    walletAddress.publicKey,
-    TOKEN_PROGRAM_ID
-  ),
-  createAssociatedTokenAccountInstruction(
-    walletAddress.publicKey,
-    userTokenAccountAddress,
-    walletAddress.publicKey,
-    mint.publicKey,
-    TOKEN_PROGRAM_ID
-  ),
-  createMintToInstruction(mint.publicKey, userTokenAccountAddress, walletAddress.publicKey, 1),
+	web3.SystemProgram.createAccount({
+		fromPubkey: walletAddress.publicKey,
+		newAccountPubkey: mint.publicKey,
+		space: MintLayout.span,
+		lamports: await candyMachine.program.provider.connection.getMinimumBalanceForRentExemption(MintLayout.span),
+		programId: TOKEN_PROGRAM_ID,
+	}),
+	createInitializeMintInstruction(mint.publicKey, 0, walletAddress.publicKey, walletAddress.publicKey, TOKEN_PROGRAM_ID),
+	createAssociatedTokenAccountInstruction(walletAddress.publicKey, userTokenAccountAddress, walletAddress.publicKey, mint.publicKey, TOKEN_PROGRAM_ID),
+	createMintToInstruction(mint.publicKey, userTokenAccountAddress, walletAddress.publicKey, 1),
 ];
 ```
 
@@ -65,68 +55,68 @@ In Solana, a transaction is a bundle of instructions. So, here we bundle a few i
 
 ```jsx
 if (candyMachine.state.gatekeeper) {
-  // Rest of the code
+	// Rest of the code
 }
 
 if (candyMachine.state.whitelistMintSettings) {
-  // Rest of the code
+	// Rest of the code
 }
 
 if (candyMachine.state.tokenMint) {
-  // Rest of the code
+	// Rest of the code
 }
 ```
+
 Here, we're checking if the Candy machine is using a captcha to prevent bots (`gatekeeper`), if there is a whitelist setup, or if the mint is token gated. Each of these has a different set of checks which the users' account needs to pass. Once passed, additional instructions are pushed into the transaction.
 
 ```jsx
 const metadataAddress = await getMetadata(mint.publicKey);
 const masterEdition = await getMasterEdition(mint.publicKey);
 
-const [candyMachineCreator, creatorBump] = await getCandyMachineCreator(
-  candyMachineAddress,
-);
+const [candyMachineCreator, creatorBump] = await getCandyMachineCreator(candyMachineAddress);
 
 instructions.push(
-  await candyMachine.program.instruction.mintNft(creatorBump, {
-    accounts: {
-      candyMachine: candyMachineAddress,
-      candyMachineCreator,
-      payer: walletAddress.publicKey,
-      wallet: candyMachine.state.treasury,
-      mint: mint.publicKey,
-      metadata: metadataAddress,
-      masterEdition,
-      mintAuthority: walletAddress.publicKey,
-      updateAuthority: walletAddress.publicKey,
-      tokenMetadataProgram: TOKEN_METADATA_PROGRAM_ID,
-      tokenProgram: TOKEN_PROGRAM_ID,
-      systemProgram: SystemProgram.programId,
-      rent: web3.SYSVAR_RENT_PUBKEY,
-      clock: web3.SYSVAR_CLOCK_PUBKEY,
-      recentBlockhashes: web3.SYSVAR_RECENT_BLOCKHASHES_PUBKEY,
-      instructionSysvarAccount: web3.SYSVAR_INSTRUCTIONS_PUBKEY,
-    },
-    remainingAccounts:
-      remainingAccounts.length > 0 ? remainingAccounts : undefined,
-  }),
+	await candyMachine.program.instruction.mintNft(creatorBump, {
+		accounts: {
+			candyMachine: candyMachineAddress,
+			candyMachineCreator,
+			payer: walletAddress.publicKey,
+			wallet: candyMachine.state.treasury,
+			mint: mint.publicKey,
+			metadata: metadataAddress,
+			masterEdition,
+			mintAuthority: walletAddress.publicKey,
+			updateAuthority: walletAddress.publicKey,
+			tokenMetadataProgram: TOKEN_METADATA_PROGRAM_ID,
+			tokenProgram: TOKEN_PROGRAM_ID,
+			systemProgram: SystemProgram.programId,
+			rent: web3.SYSVAR_RENT_PUBKEY,
+			clock: web3.SYSVAR_CLOCK_PUBKEY,
+			recentBlockhashes: web3.SYSVAR_RECENT_BLOCKHASHES_PUBKEY,
+			instructionSysvarAccount: web3.SYSVAR_INSTRUCTIONS_PUBKEY,
+		},
+		remainingAccounts: remainingAccounts.length > 0 ? remainingAccounts : undefined,
+	})
 );
 ```
-Finally, after all the checks have passed, we create the instructions for actually minting the NFT. 
+
+Finally, after all the checks have passed, we create the instructions for actually minting the NFT.
 
 ```jsx
-  try {
-    return (
-      await sendTransactions(
-        candyMachine.program.provider.connection,
-        candyMachine.program.provider.wallet,
-        [instructions, cleanupInstructions],
-        [signers, []],
-      )
-    ).txs.map(t => t.txid);
-  } catch (e) {
-    console.log(e);
-  }
+try {
+	return (
+		await sendTransactions(
+			candyMachine.program.provider.connection,
+			candyMachine.program.provider.wallet,
+			[instructions, cleanupInstructions],
+			[signers, []]
+		)
+	).txs.map((t) => t.txid);
+} catch (e) {
+	console.log(e);
+}
 ```
+
 This you already know! We use a provider, our wallet, all our instructions, and then call `sendTransactions` which is a function that talks to the blockchain. **This is the magic line where we actually hit our candy machine** **and tell it to mint our NFT.**
 
 I know I blazed through all this stuff, so, be sure to go through it yourself! Also, it'd be awesome if someone just made this one nice NPM module lol.
@@ -137,16 +127,17 @@ In your `CandyMachine` component, have your "Mint" button call the `mintToken` f
 
 ```jsx
 return (
-  // Only show this if candyMachine and candyMachine.state is available
-  candyMachine && candyMachine.state && (
-    <div className="machine-container">
-      <p>{`Drop Date: ${candyMachine.state.goLiveDateTimeString}`}</p>
-      <p>{`Items Minted: ${candyMachine.state.itemsRedeemed} / ${candyMachine.state.itemsAvailable}`}</p>
-      <button className="cta-button mint-button" onClick={mintToken}>
-          Mint NFT
-      </button>
-    </div>
-  )
+	// Only show this if candyMachine and candyMachine.state is available
+	candyMachine &&
+	candyMachine.state && (
+		<div className="machine-container">
+			<p>{`Drop Date: ${candyMachine.state.goLiveDateTimeString}`}</p>
+			<p>{`Items Minted: ${candyMachine.state.itemsRedeemed} / ${candyMachine.state.itemsAvailable}`}</p>
+			<button className="cta-button mint-button" onClick={mintToken}>
+				Mint NFT
+			</button>
+		</div>
+	)
 );
 ```
 
@@ -192,6 +183,6 @@ Take some time now to kinda clean stuff up. Clean up your code a little. Change 
 
 ### 🚨 Progress Report
 
-*Please do this else Farza will be sad :(*
+_Please do this else Farza will be sad :(_
 
 In `#progress` post a screenshot of your minted NFTs! Maybe make a tweet here telling the world what you're up to. Be sure to tag `@_buildspace`.

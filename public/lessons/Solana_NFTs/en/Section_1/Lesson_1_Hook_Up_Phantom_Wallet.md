@@ -1,3 +1,7 @@
+---
+title: Hook up Phantom Wallet.
+---
+
 ### 🤖 Let's grab the starter code
 
 Start by heading over to [this GitHub link](https://github.com/buildspace/nft-drop-starter-project) where you find the starter repo code. From here you are going to want to make sure you press the "Fork" button in the top right of the page
@@ -41,44 +45,41 @@ import React from "react";
 import dynamic from "next/dynamic";
 
 // This is to disable SSR when using WalletMultiButton
-const WalletMultiButtonDynamic = dynamic(
-  async () => (await import("@solana/wallet-adapter-react-ui")).WalletMultiButton,
-  { ssr: false }
-);
+const WalletMultiButtonDynamic = dynamic(async () => (await import("@solana/wallet-adapter-react-ui")).WalletMultiButton, { ssr: false });
 
 // Constants
 const TWITTER_HANDLE = "_buildspace";
 const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
 
 const Home = () => {
-    // Actions
-    const renderNotConnectedContainer = () => (
-        <div>
-            <img src="https://media.giphy.com/media/eSwGh3YK54JKU/giphy.gif" alt="emoji" />
+	// Actions
+	const renderNotConnectedContainer = () => (
+		<div>
+			<img src="https://media.giphy.com/media/eSwGh3YK54JKU/giphy.gif" alt="emoji" />
 
-            <div className="button-container">
-                <WalletMultiButtonDynamic className="cta-button connect-wallet-button" />
-            </div>
-        </div>
-    );
+			<div className="button-container">
+				<WalletMultiButtonDynamic className="cta-button connect-wallet-button" />
+			</div>
+		</div>
+	);
 
-    return (
-        <div className="App">
-            <div className="container">
-                <div className="header-container">
-                    <p className="header">🍭 Candy Drop</p>
-                    <p className="sub-text">NFT drop machine with fair mint</p>
-                    {/* Render your connect to wallet button right here */}
-                    {renderNotConnectedContainer()}
-                </div>
+	return (
+		<div className="App">
+			<div className="container">
+				<div className="header-container">
+					<p className="header">🍭 Candy Drop</p>
+					<p className="sub-text">NFT drop machine with fair mint</p>
+					{/* Render your connect to wallet button right here */}
+					{renderNotConnectedContainer()}
+				</div>
 
-                <div className="footer-container">
-                    <img alt="Twitter Logo" className="twitter-logo" src="twitter-logo.svg" />
-                    <a className="footer-text" href={TWITTER_LINK} target="_blank" rel="noreferrer">{`built on @${TWITTER_HANDLE}`}</a>
-                </div>
-            </div>
-        </div>
-    );
+				<div className="footer-container">
+					<img alt="Twitter Logo" className="twitter-logo" src="twitter-logo.svg" />
+					<a className="footer-text" href={TWITTER_LINK} target="_blank" rel="noreferrer">{`built on @${TWITTER_HANDLE}`}</a>
+				</div>
+			</div>
+		</div>
+	);
 };
 
 export default Home;
@@ -88,12 +89,12 @@ Nice! Not too bad right? Let's break this down a bit:
 
 ```jsx
 const renderNotConnectedContainer = () => (
-    <div>
-        <img src="https://media.giphy.com/media/eSwGh3YK54JKU/giphy.gif" alt="emoji" />
-        <div className="button-container">
-            <WalletMultiButton className="cta-button connect-wallet-button" />
-        </div>
-    </div>
+	<div>
+		<img src="https://media.giphy.com/media/eSwGh3YK54JKU/giphy.gif" alt="emoji" />
+		<div className="button-container">
+			<WalletMultiButton className="cta-button connect-wallet-button" />
+		</div>
+	</div>
 );
 ```
 
@@ -113,19 +114,19 @@ import "../styles/CandyMachine.css";
 import "@solana/wallet-adapter-react-ui/styles.css";
 
 const App = ({ Component, pageProps }) => {
-    const network = WalletAdapterNetwork.Devnet;
-    const endpoint = useMemo(() => clusterApiUrl(network), [network]);
-    const wallets = useMemo(() => [new PhantomWalletAdapter()], [network]);
+	const network = WalletAdapterNetwork.Devnet;
+	const endpoint = useMemo(() => clusterApiUrl(network), [network]);
+	const wallets = useMemo(() => [new PhantomWalletAdapter()], [network]);
 
-    return (
-        <ConnectionProvider endpoint={endpoint}>
-            <WalletProvider wallets={wallets} autoConnect>
-                <WalletModalProvider>
-                    <Component {...pageProps} />
-                </WalletModalProvider>
-            </WalletProvider>
-        </ConnectionProvider>
-    );
+	return (
+		<ConnectionProvider endpoint={endpoint}>
+			<WalletProvider wallets={wallets} autoConnect>
+				<WalletModalProvider>
+					<Component {...pageProps} />
+				</WalletModalProvider>
+			</WalletProvider>
+		</ConnectionProvider>
+	);
 };
 
 export default App;
@@ -142,18 +143,18 @@ import { PhantomWalletAdapter, SolflareWalletAdapter, TorusWalletAdapter } from 
 // ... Rest of your code
 
 const App = ({ Component, pageProps }) => {
-    // ... Rest of your code
-    const wallets = useMemo(() => [new PhantomWalletAdapter(), new SolflareWalletAdapter(), new TorusWalletAdapter()], [network]);
+	// ... Rest of your code
+	const wallets = useMemo(() => [new PhantomWalletAdapter(), new SolflareWalletAdapter(), new TorusWalletAdapter()], [network]);
 
-    return (
-        <ConnectionProvider endpoint={endpoint}>
-            <WalletProvider wallets={wallets} autoConnect>
-                <WalletModalProvider>
-                    <Component {...pageProps} />
-                </WalletModalProvider>
-            </WalletProvider>
-        </ConnectionProvider>
-    );
+	return (
+		<ConnectionProvider endpoint={endpoint}>
+			<WalletProvider wallets={wallets} autoConnect>
+				<WalletModalProvider>
+					<Component {...pageProps} />
+				</WalletModalProvider>
+			</WalletProvider>
+		</ConnectionProvider>
+	);
 };
 
 export default App;
