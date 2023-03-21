@@ -12,3 +12,24 @@ GET http://localhost:3000/api/preview/network
 
 ### Error
 GET http://localhost:3000/api/preview/lessons/399ec202ff884644082034521272191847781fc65b7f562d49527fd15368697020616e204e465420436f6c6c656374696f6e206f6e20536f6c616e62
+
+### Deployed
+https://main--effervescent-halva-59ace7.netlify.app/api/preview/lessons
+
+### Docket
+https://github.com/PalmerEk/jubilant-sniffle/blob/main/docket.json
+
+###
+https://raw.githubusercontent.com/PalmerEk/jubilant-sniffle/main/docket.json
+
+### crazy git in memory shit
+GET http://localhost:3000/api/preview/test/PalmerEk/jubilant-sniffle
+
+### test2
+GET http://localhost:3000/api/preview/test?url=https://raw.githubusercontent.com/PalmerEk/jubilant-sniffle/main/overview.md
+
+### Validate Overview
+GET http://localhost:3000/api/lessons/validate?url=https://raw.githubusercontent.com/PalmerEk/jubilant-sniffle/main/overview.md
+
+###
+GET http://localhost:3000/api/lessons/PalmerEk/jubilant-sniffle

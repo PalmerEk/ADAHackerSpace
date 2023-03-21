@@ -1,14 +1,22 @@
 import { BlockFrostAPI } from "@blockfrost/blockfrost-js"; // using import syntax
 import NodeCache from "node-cache";
+import nodePath from "node:path";
+
 const config = useRuntimeConfig();
 
 // Cache lessons for an hour
-const lessonCache = new NodeCache({ stdTTL: 60 * 60 });
+const LESSONS_CACHE = {
+	mainnet: new NodeCache({ stdTTL: 60 * 60 }),
+	preview: new NodeCache({ stdTTL: 60 * 60 }),
+	preprod: new NodeCache({ stdTTL: 60 * 60 }),
+};
 
 const networkSvc = (network = "mainnet") => {
 	const policyId = config[`LESSONS_${network.toUpperCase()}_POLICY_ID`];
 	const projectId = config[`BLOCKFROST_${network.toUpperCase()}_PROJECT_ID`];
 	const blockfrostAPI = new BlockFrostAPI({ projectId });
+
+	const lessonCache = LESSONS_CACHE[network];
 
 	const networkInfo = async () => {
 		return await blockfrostAPI.network();
@@ -51,7 +59,7 @@ const networkSvc = (network = "mainnet") => {
 
 		// Fetch the lesson from the network
 		const asset = await blockfrostAPI.assetsById(id);
-		const shappedAsset = {
+		let shappedAsset = {
 			id: asset.asset,
 			title: matadataToString(asset.onchain_metadata.name),
 			description: matadataToString(asset.onchain_metadata.description),
@@ -60,19 +68,40 @@ const networkSvc = (network = "mainnet") => {
 			categories: matadataToString(asset.onchain_metadata.categories).split(","),
 			tracks: matadataToString(asset.onchain_metadata.tracks).split(","),
 			duration: asset.onchain_metadata.duration,
-			docket: "/lessons/Solana_NFTs/docket.json", //ToDO: Store on IPFS?
+			docket: "https://raw.githubusercontent.com/PalmerEk/jubilant-sniffle/main/docket.json", //ToDO: Store on IPFS?
 		};
 
 		// TODO: Rewards should be stored on the blockchain
 		// TODO: Docket should be a link to a JSON file preferablly on IPFS
-		// TODO: This (server) should fetch the docket and return it to the client
+		// TODO: This (server) should fetch the docket as well as the lesson and merge them together
+
+		// fetch the docket (store the path)
+		const docketURL = new URL(shappedAsset.docket);
+		const docketBaseURL = new URL(nodePath.dirname(docketURL.pathname) + "/", docketURL.origin);
+
+		const docket = await fetch(docketURL).then((res) => res.json());
+
+		const language = "en"; // TODO: Deal with languages
+
+		docket.sections = await Promise.all(
+			docket.sections.map(async (section) => {
+				return await Promise.all(
+					section[language].steps.map(async (step) => {
+						//console.log(docketBaseURL.href, nodePath.join(language, step));
+						const content = await fetch(new URL(nodePath.join(language, step), docketBaseURL)).then((res) => res.text());
+						return { title: section[language].title, content };
+					})
+				);
+			})
+		);
+
+		shappedAsset = { ...shappedAsset, docket };
 
 		lessonCache.set(id, shappedAsset);
-
 		return lessonCache.get(id);
 	};
 
-	return { networkInfo, getLessons, getLesson };
+	return { networkInfo, getLessons, getLesson, test };
 };
 
 const networkSniff = async (txHash) => {

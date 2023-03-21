@@ -28,18 +28,12 @@ export const useLessons = createGlobalState(() => {
 			})
 		);
 
-		lessons.value = await Promise.all(
-			approvedLessons.map(async (lesson) => {
-				const docket = await fetch(lesson.docket).then((res) => res.json());
-				return { ...lesson, docket };
-			})
-		)
-			.catch((err) => {
-				error.value = err;
-			})
-			.finally(() => {
-				isLoading.value--;
-			});
+		// lessons.value = await Promise.all(
+		// 	approvedLessons.map(async (lesson) => {
+		// 		const docket = await fetch(lesson.docket).then((res) => res.json());
+		// 		return { ...lesson, docket };
+		// 	})
+		// );
 	};
 
 	const fetchStepsContent = async (steps) => {
@@ -48,6 +42,27 @@ export const useLessons = createGlobalState(() => {
 				return await markdownParser.parse(stepURL, await $fetch(stepURL));
 			})
 		);
+	};
+
+	const getLessonByURL = async (url) => {
+		isLoading.value++;
+		let lesson = null;
+		try {
+			lesson = await $fetch(`/api/lessons/${url}`);
+
+			// Determine the best available language based on the user's browser settings, default to english
+			language.value = languages.value.reduceRight((bestLang, lang) => {
+				if (lesson[lang.slice(0, 2)]) bestLang = lang.slice(0, 2);
+				return bestLang;
+			}, "en");
+
+			return lesson[language.value];
+		} catch (err) {
+			error.value = err;
+		} finally {
+			isLoading.value--;
+			if (error.value) return null;
+		}
 	};
 
 	const getLesson = async (lesson_id) => {
@@ -123,6 +138,7 @@ export const useLessons = createGlobalState(() => {
 		language: readonly(language),
 
 		getLesson,
+		getLessonByURL,
 		getStep,
 
 		isReady,

@@ -25,8 +25,10 @@
     "@formkit/nuxt": "^0.17.0-e457a82",
     "@formkit/themes": "^0.17.0-e457a82",
     "@hyperionbt/helios": "^0.12.12",
+    "filer": "^1.4.1",
     "flowbite": "^1.6.4",
     "gun": "^0.2020.1239",
+    "isomorphic-git": "^1.23.0",
     "node-cache": "^5.1.2",
     "tw-elements": "^1.0.0-beta1"
   }

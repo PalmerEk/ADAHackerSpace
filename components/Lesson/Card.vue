@@ -1,17 +1,19 @@
 <script setup>
-	defineProps({
+	const props = defineProps({
 		lesson: {
 			type: Object,
 			required: true,
 		},
 	});
+
+	const overview = computed(() => props.lesson.overview);
 </script>
 
 <template>
 	<div class="bg-white block rounded-lg shadow-lg mb-6 lg:mb-0" data-mdb-ripple="true" data-mdb-ripple-color="light">
 		<NuxtLink :to="`/lesson/${lesson.id}/step/0`">
 			<div class="relative overflow-hidden bg-no-repeat bg-cover">
-				<img :src="lesson.image" class="w-full rounded-t-lg" />
+				<img :src="overview.image" class="w-full rounded-t-lg" />
 				<a href="#!">
 					<div
 						class="absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed opacity-0 hover:opacity-100 transition duration-300 ease-in-out"
@@ -26,11 +28,17 @@
 				</svg>
 			</div>
 			<div class="p-6">
-				<h5 class="font-bold text-lg mb-3">{{ lesson.title }}</h5>
-				<p class="mb-4 pb-2">
-					{{ lesson.description }}
+				<h5 class="font-bold text-lg mb-3">{{ overview.title }}</h5>
+				<!-- <p class="mb-4 pb-2">
+					{{ overview.description }}
+				</p> -->
+
+				<p class="prose">
+					<ContentRenderer :value="overview">
+						<ContentRendererMarkdown :value="overview" :excerpt="true" />
+					</ContentRenderer>
 				</p>
-				<NuxtLink :to="`/lesson/${lesson.id}/overview`">
+				<!-- <NuxtLink :to="`/lesson/${overview.id}/overview`">
 					<button
 						data-mdb-ripple="true"
 						data-mdb-ripple-color="light"
@@ -38,12 +46,12 @@
 					>
 						Learn more
 					</button>
-				</NuxtLink>
+				</NuxtLink> -->
 			</div>
 		</NuxtLink>
 
-		<div class="p-6">
-			<!-- TODO: Link to pool.pm reward token if token? -->
+		<!-- TODO: Link to pool.pm reward token if token? -->
+		<!-- <div class="p-6">
 			<button
 				v-for="reward in lesson.docket.rewards"
 				data-mdb-ripple="true"
@@ -53,6 +61,6 @@
 				<h5>{{ reward.quantity }} {{ reward.name }}</h5>
 				<img :src="reward.image" class="w-10 h-10 rounded-full inline-block" :title="reward.name" />
 			</button>
-		</div>
+		</div> -->
 	</div>
 </template>
