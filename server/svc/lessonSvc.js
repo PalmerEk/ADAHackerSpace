@@ -4,7 +4,7 @@ import nodePath from "node:path";
 import markdownParser from "@nuxt/content/transformers/markdown";
 
 import git from "isomorphic-git";
-import http from "isomorphic-git/http/web";
+import http from "isomorphic-git/http/node/index.cjs";
 import Filer from "filer";
 
 // In memory filesystem for loading lessons from github
