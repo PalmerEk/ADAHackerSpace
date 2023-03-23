@@ -1,8 +1,7 @@
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
 	ssr: false,
-	modules: ["@nuxt/content", "@nuxtjs/tailwindcss", "@vueuse/nuxt", "@formkit/nuxt"],
-	css: ["@/assets/css/tailwind.css"],
+	modules: ["@nuxt/content", "@vueuse/nuxt", "@formkit/nuxt"],
 	content: {
 		// https://content.nuxtjs.org/api/configuration
 		highlight: {
@@ -23,9 +22,11 @@ export default defineNuxtConfig({
 	},
 	postcss: {
 		plugins: {
-			tailwindcss: {},
 			autoprefixer: {},
 		},
+	},
+	build: {
+		transpile: ["vuetify"],
 	},
 	runtimeConfig: {
 		BLOCKFROST_MAINNET_PROJECT_ID: process.env.BLOCKFROST_MAINNET_PROJECT_ID,

@@ -11,10 +11,9 @@ import Filer from "filer";
 const fs = new Filer.FileSystem({ provider: new Filer.FileSystem.providers.Memory() });
 const pfs = fs.promises;
 
-// Cache lessons for an hour
-const lessonCache = new NodeCache({ stdTTL: 60 * 60 });
-
-//const lessonCache = LESSONS_CACHE[network];
+// TODO: Should only cache Published lesssons and should increase the TTL
+// Cache lesson details for 15 minutes
+const lessonCache = new NodeCache({ stdTTL: 60 * 1 });
 
 const validateOverview = async (url) => {
 	const status = {
@@ -67,6 +66,7 @@ const validateOverview = async (url) => {
 	return status;
 };
 
+/*
 // Given a project, return the parsed the overview.md file
 const fetchLessonOverview = async (repo) => {
 	const dir = await gitLesson(repo);
@@ -85,6 +85,18 @@ const fetchLessonOverview = async (repo) => {
 
 	return { overview, meta: { dir, repo, overview: overviewMDPath } };
 };
+*/
+
+const getLessons = async () => {
+	// MOCK: Testing
+	const lessonAssets = ["PalmerEk/jubilant-sniffle"];
+
+	lessonAssets.forEach((asset) => {
+		if (!lessonCache.has(asset)) lessonCache.set(asset, null); // Stuff in a placeholder
+	});
+
+	return lessonCache.keys();
+};
 
 const fsRecursive = async (dir) => {
 	const files = await pfs.readdir(dir, { withFileTypes: true });
@@ -101,6 +113,9 @@ const fsRecursive = async (dir) => {
 
 // grab a full lesson with parsed content and all files
 const fetchLesson = async (repo) => {
+	const cachedLesson = lessonCache.get(repo);
+	if (cachedLesson) return cachedLesson;
+
 	const dir = await gitLesson(repo);
 
 	const files = await fsRecursive(dir);
@@ -133,6 +148,7 @@ const fetchLesson = async (repo) => {
 			})
 	);
 
+	lessonCache.set(repo, lessonTree);
 	return lessonTree;
 };
 
@@ -190,4 +206,4 @@ const gitLesson = async (repo) => {
 	});
 };
 
-export { fetchLessonOverview, validateOverview, gitLesson, fetchLesson };
+export { getLessons, validateOverview, fetchLesson };

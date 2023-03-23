@@ -4,6 +4,8 @@
 	const { getLessonByURL } = useLessons();
 	const lesson = await getLessonByURL(lessonURL);
 
+	const overview = computed(() => lesson.overview);
+
 	const sections = computed(() => {
 		return Object.keys(lesson)
 			.filter((k) => {
@@ -45,40 +47,31 @@
 				return mappedSection;
 			});
 	});
-
-	const sectionsSteps = (section) => {
-		return Object.keys(section);
-	};
 </script>
 
 <template>
-	<main>
-		<div>
-			<div class="flex flex-row">
-				<LessonCard :lesson="lesson" />
-			</div>
-			<!-- <pre>{{ lesson }}</pre> -->
-			<ul>
-				<li v-for="section in sections" :key="section._id">
-					<h2>{{ section.title }}</h2>
+	<NuxtLayout name="lesson">
+		<template #toc> <LessonTOC :sections="sections" :image="overview.image" /> </template>
 
-					<p class="prose" v-if="section.excerpt">
-						<ContentRenderer :value="section">
-							<ContentRendererMarkdown :value="section" :excerpt="true" />
-						</ContentRenderer>
-					</p>
-					<ul>
-						<li v-for="step in section.steps" :key="step._id">
-							{{ step.title }}
-							<!-- <p class="prose" v-if="step.excerpt">
-								<ContentRenderer :value="step.excerpt">
-									<ContentRendererMarkdown :value="step.excerpt" />
-								</ContentRenderer>
-							</p> -->
-						</li>
-					</ul>
-				</li>
-			</ul>
-		</div>
-	</main>
+		<v-card>
+			<v-card-title class="text-white" v-text="overview.title"></v-card-title>
+			<v-img :src="overview.image" class="align-end" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" height="400px" cover> </v-img>
+
+			<v-card-actions>
+				<ul>
+					<li v-for="section in sections" :key="section._id">
+						<h2>{{ section.title }}</h2>
+
+						<p class="prose" v-if="section.excerpt">
+							<ContentRenderer :value="section">
+								<ContentRendererMarkdown :value="section" :excerpt="true" />
+							</ContentRenderer>
+						</p>
+					</li>
+				</ul>
+			</v-card-actions>
+
+			<v-btn :to="`/lesson/${lessonURL}/${sections[1].title}/${sections[1].steps[1].title}`">Lets Go!</v-btn>
+		</v-card>
+	</NuxtLayout>
 </template>

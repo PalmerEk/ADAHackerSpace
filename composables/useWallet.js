@@ -191,7 +191,7 @@ export const useWallet = (default_provider_key = "walletprovider", default_handl
 
 			if (wallet.value?.installed && window.cardano[wallet.value?.provider]) {
 				try {
-					api.value = await window.cardano.eternl.enable();
+					api.value = await window.cardano[wallet.value?.provider].enable();
 					// getNetworkId,
 					// getBalance,
 					// getUtxos,

@@ -13,27 +13,19 @@ export const useLessons = createGlobalState(() => {
 
 	const lessons = ref(null);
 
-	// TODO: Get this from the blockchain (based on the policy id)
-	// TODO, fetch lessons from the blockchain
 	const fetchLessons = async () => {
 		error.value = undefined;
 		isLoading.value++;
 
 		// Grab the available lesson ids from the gateway
-		const lessonIds = await $fetch("/api/preview/lessons");
+		const lessonIds = await $fetch("/api/lessons");
+
 		// Get the details of each lesson
-		const approvedLessons = await Promise.all(
-			lessonIds.map(async (id) => {
-				return await $fetch(`/api/preview/lessons/${id}`);
+		lessons.value = await Promise.all(
+			lessonIds.map(async (url) => {
+				return { id: url, ...(await getLessonByURL(url)) };
 			})
 		);
-
-		// lessons.value = await Promise.all(
-		// 	approvedLessons.map(async (lesson) => {
-		// 		const docket = await fetch(lesson.docket).then((res) => res.json());
-		// 		return { ...lesson, docket };
-		// 	})
-		// );
 	};
 
 	const fetchStepsContent = async (steps) => {

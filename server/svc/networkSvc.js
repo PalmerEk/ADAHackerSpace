@@ -1,22 +1,10 @@
 import { BlockFrostAPI } from "@blockfrost/blockfrost-js"; // using import syntax
-import NodeCache from "node-cache";
-import nodePath from "node:path";
 
 const config = useRuntimeConfig();
 
-// Cache lessons for an hour
-const LESSONS_CACHE = {
-	mainnet: new NodeCache({ stdTTL: 60 * 60 }),
-	preview: new NodeCache({ stdTTL: 60 * 60 }),
-	preprod: new NodeCache({ stdTTL: 60 * 60 }),
-};
-
 const networkSvc = (network = "mainnet") => {
-	const policyId = config[`LESSONS_${network.toUpperCase()}_POLICY_ID`];
 	const projectId = config[`BLOCKFROST_${network.toUpperCase()}_PROJECT_ID`];
 	const blockfrostAPI = new BlockFrostAPI({ projectId });
-
-	const lessonCache = LESSONS_CACHE[network];
 
 	const networkInfo = async () => {
 		return await blockfrostAPI.network();
@@ -28,10 +16,7 @@ const networkSvc = (network = "mainnet") => {
 		return value.toString();
 	};
 
-	const lessonsLoaded = () => {
-		return lessonCache.getStats().keys > 0;
-	};
-
+	/*	
 	const getLessons = async () => {
 		if (!lessonsLoaded()) {
 			// Cache is empty
@@ -100,8 +85,9 @@ const networkSvc = (network = "mainnet") => {
 		lessonCache.set(id, shappedAsset);
 		return lessonCache.get(id);
 	};
+*/
 
-	return { networkInfo, getLessons, getLesson, test };
+	return { networkInfo };
 };
 
 const networkSniff = async (txHash) => {

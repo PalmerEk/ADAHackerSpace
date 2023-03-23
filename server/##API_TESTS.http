@@ -31,5 +31,12 @@ GET http://localhost:3000/api/preview/test?url=https://raw.githubusercontent.com
 ### Validate Overview
 GET http://localhost:3000/api/lessons/validate?url=https://raw.githubusercontent.com/PalmerEk/jubilant-sniffle/main/overview.md
 
+### Get Approved Lessons
+GET http://localhost:3000/api/lessons
+
 ###
 GET http://localhost:3000/api/lessons/PalmerEk/jubilant-sniffle
+
+###
+GET https://main--effervescent-halva-59ace7.netlify.app/api/lessons/PalmerEk/jubilant-sniffle
+

@@ -9,8 +9,6 @@
   "devDependencies": {
     "@heroicons/vue": "^2.0.16",
     "@nuxt/content": "^2.5.2",
-    "@nuxtjs/tailwindcss": "^6.4.1",
-    "@tailwindcss/typography": "^0.5.9",
     "@vueuse/core": "^9.13.0",
     "@vueuse/nuxt": "^9.13.0",
     "netlify-cli": "^13.1.6",
@@ -25,11 +23,14 @@
     "@formkit/nuxt": "^0.17.0-e457a82",
     "@formkit/themes": "^0.17.0-e457a82",
     "@hyperionbt/helios": "^0.12.12",
+    "@mdi/font": "^7.2.96",
+    "@mdi/js": "^7.2.96",
     "filer": "^1.4.1",
     "flowbite": "^1.6.4",
     "gun": "^0.2020.1239",
     "isomorphic-git": "^1.23.0",
     "node-cache": "^5.1.2",
-    "tw-elements": "^1.0.0-beta1"
+    "tw-elements": "^1.0.0-beta1",
+    "vuetify": "^3.1.11"
   }
 }
