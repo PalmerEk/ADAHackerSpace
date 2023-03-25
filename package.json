@@ -13,7 +13,10 @@
     "@vueuse/nuxt": "^9.13.0",
     "netlify-cli": "^13.1.6",
     "nuxt": "^3.2.3",
+    "nuxt-icon": "^0.3.3",
+    "sass": "^1.60.0",
     "vite-plugin-top-level-await": "^1.3.0",
+    "vite-plugin-vuetify": "^1.0.2",
     "vite-plugin-wasm": "^3.2.2"
   },
   "dependencies": {
@@ -25,6 +28,7 @@
     "@hyperionbt/helios": "^0.12.12",
     "@mdi/font": "^7.2.96",
     "@mdi/js": "^7.2.96",
+    "@nuxt-themes/docus": "^1.9.10",
     "filer": "^1.4.1",
     "flowbite": "^1.6.4",
     "gun": "^0.2020.1239",

@@ -1,22 +1,62 @@
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
+import vuetify from "vite-plugin-vuetify";
+
 export default defineNuxtConfig({
 	ssr: false,
-	modules: ["@nuxt/content", "@vueuse/nuxt", "@formkit/nuxt"],
+	modules: [
+		"@nuxt/content",
+		"@vueuse/nuxt",
+		"@formkit/nuxt",
+		"nuxt-icon",
+		async (options, nuxt) => {
+			nuxt.hooks.hook("vite:extendConfig", (config) => config.plugins.push(vuetify()));
+		},
+	],
+	// extends: "@nuxt-themes/docus",
+	css: ["@/assets/styles/main.scss"],
 	content: {
 		// https://content.nuxtjs.org/api/configuration
 		highlight: {
 			theme: {
-				default: "material-palenight",
-				dark: "github-dark",
-			},
-		},
-		markdown: {
-			toc: {
-				depth: 5,
-				searchDepth: 5,
+				//default: "github-light",
+				//dark: "github-dark",
+				default: "dark-plus",
+				dark: "dark-plus",
+				light: "light-plus",
+				sepia: "monokai",
 			},
 		},
 	},
+
+	// | 'dark-plus'
+	// | 'dracula-soft'
+	// | 'dracula'
+	// | 'github-dark-dimmed'
+	// | 'github-dark'
+	// | 'github-light'
+	// | 'hc_light'
+	// | 'light-plus'
+	// | 'material-theme-darker'
+	// | 'material-theme-lighter'
+	// | 'material-theme-ocean'
+	// | 'material-theme-palenight'
+	// | 'material-theme'
+	// | 'min-dark'
+	// | 'min-light'
+	// | 'monokai'
+	// | 'nord'
+	// | 'one-dark-pro'
+	// | 'poimandres'
+	// | 'rose-pine-dawn'
+	// | 'rose-pine-moon'
+	// | 'rose-pine'
+	// | 'slack-dark'
+	// | 'slack-ochin'
+	// | 'solarized-dark'
+	// | 'solarized-light'
+	// | 'vitesse-dark'
+	// | 'vitesse-light'
+
 	formkit: {
 		configFile: "./formkit.config.ts",
 	},

@@ -1,22 +1,18 @@
 <script setup>
 	defineProps({
-		type: {
-			type: String,
-			default: "info",
-		},
-		title: {
-			type: String,
-			default: () => null,
-		},
 		icon: {
 			type: String,
 			default: () => null,
+		},
+		href: {
+			type: String,
+			required: true,
 		},
 	});
 </script>
 
 <template>
-	<v-chip :title="title" :icon="icon" :color="type">
+	<v-btn :href="href" target="_blank">
 		<ContentSlot :use="$slots.default" unwrap="p" />
-	</v-chip>
+	</v-btn>
 </template>

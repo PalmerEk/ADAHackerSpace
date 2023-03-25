@@ -13,50 +13,75 @@ Learn how to use @nuxt/content.
 
 Full amount of content beyond the more divider.
 
-# MD Examples
+### Buttons (Btn)
 
-## Components
+::Btn{type="info"}
+My MD Info Button
+::
+
+#### Properties
+
+-   type: primary, secondary, success, danger, warning, info, neutral
+
+### Alerts
+
+::alert{type="warning" icon="mdi-alert-octagon" title="Be Careful!"}
+Check out a **warning** alert with `code` and a [link](#).
+::
+
+#### Properties
+
+-   type: primary, secondary, success, danger, warning, info, neutral
+-   icon: any mdi icon (optional)
+-   title: any title (optional)
 
 ### ::tab
 
 ::tab{:tabs='["Chrome", "Firefox", "Brave", "Edge", "Opera"]'}
 
 #Chrome
-  1. Go to the [Chrome Web Store](https://chrome.google.com/webstore/detail/eternl-wallet/ndjgjgjgjgjgjgjgjgjgjgjgjgjgjgjg)
-  2. Click the "Add to Chrome" button
-  3. Click the "Add Extension" button
 
-  ```js
-  const foo = "bar";
-  ```
+1. Go to the [Chrome Web Store](https://chrome.google.com/webstore/detail/eternl-wallet/ndjgjgjgjgjgjgjgjgjgjgjgjgjgjgjg)
+2. Click the "Add to Chrome" button
+3. Click the "Add Extension" button
+
+```js
+const foo = "bar";
+```
 
 #Firefox
-  1. Go to the [Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/eternl-wallet/)
-  2. Click the "Add to Firefox" button
-  3. Click the "Add" button
 
-  ```js
-  const foo = "bar";
-  ```
+1. Go to the [Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/eternl-wallet/)
+2. Click the "Add to Firefox" button
+3. Click the "Add" button
+
+```js
+const foo = "bar";
+```
 
 #Brave
-  1. Go to the [Brave Add-ons](https://chrome.google.com/webstore/detail/eternl-wallet/ndjgjgjgjgjgjgjgjgjgjgjgjgjgjgjg)
-  2. Click the "Add to Chrome" button
-  3. Click the "Add Extension" button
+
+1. Go to the [Brave Add-ons](https://chrome.google.com/webstore/detail/eternl-wallet/ndjgjgjgjgjgjgjgjgjgjgjgjgjgjgjg)
+2. Click the "Add to Chrome" button
+3. Click the "Add Extension" button
 
 #Edge
-  1. Go to the [Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/eternl-wallet/ndjgjgjgjgjgjgjgjgjgjgjgjgjgjgjg)
-  2. Click the "Add to Edge" button
-  3. Click the "Add Extension" button
+
+1. Go to the [Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/eternl-wallet/ndjgjgjgjgjgjgjgjgjgjgjgjgjgjgjg)
+2. Click the "Add to Edge" button
+3. Click the "Add Extension" button
 
 #Opera
-  1. Go to the [Opera Add-ons](https://addons.opera.com/en/extensions/details/eternl-wallet/)
-  2. Click the "Add to Opera" button
-  3. Click the "Add Extension" button
+
+1. Go to the [Opera Add-ons](https://addons.opera.com/en/extensions/details/eternl-wallet/)
+2. Click the "Add to Opera" button
+3. Click the "Add Extension" button
 
 ::
 
+# MD Examples
 
+## Components
 
 ::group
 ::MyButton{type="info"}
@@ -92,16 +117,6 @@ Check out a **info** alert with `code` and a [link](/).
 Check out a **neutral** alert with `code` and a [link](/).
 ::
 
-### TODO: Badge
-
-:badge[v1.2]
-
-:badge[Deprecated]{type="warning"}
-
-::badge{type="danger"}
-Not found!
-::
-
 ### TODO: BlockHero
 
 ### TODO: ButtonLink
@@ -132,7 +147,7 @@ Not found!
 
 ```js
 const foo = "bar";
-````
+```
 
 ## Basic Syntax
 

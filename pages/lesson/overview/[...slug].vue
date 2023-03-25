@@ -51,27 +51,21 @@
 
 <template>
 	<NuxtLayout name="lesson">
-		<template #toc> <LessonTOC :sections="sections" :image="overview.image" /> </template>
+		<template #toc> <LessonTOC :lesson="lesson" /> </template>
 
-		<v-card>
-			<v-card-title class="text-white" v-text="overview.title"></v-card-title>
-			<v-img :src="overview.image" class="align-end" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" height="400px" cover> </v-img>
+		<h1>{{ overview.title }}</h1>
+		<v-img :src="overview.image" class="align-end" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" height="400px" cover> </v-img>
 
-			<v-card-actions>
-				<ul>
-					<li v-for="section in sections" :key="section._id">
-						<h2>{{ section.title }}</h2>
+		<ul>
+			<li v-for="section in sections" :key="section._id">
+				<h2>{{ section.title }}</h2>
 
-						<p class="prose" v-if="section.excerpt">
-							<ContentRenderer :value="section">
-								<ContentRendererMarkdown :value="section" :excerpt="true" />
-							</ContentRenderer>
-						</p>
-					</li>
-				</ul>
-			</v-card-actions>
+				<p class="prose" v-if="section.excerpt">
+					<ContentRenderer :value="section" :excerpt="true"> </ContentRenderer>
+				</p>
+			</li>
+		</ul>
 
-			<v-btn :to="`/lesson/${lessonURL}/${sections[1].title}/${sections[1].steps[1].title}`">Lets Go!</v-btn>
-		</v-card>
+		<v-btn :to="`/lesson/${lessonURL}/${sections[0].title}/${sections[0].steps[0].title}`">Lets Go!</v-btn>
 	</NuxtLayout>
 </template>

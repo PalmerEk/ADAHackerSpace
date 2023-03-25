@@ -19,9 +19,7 @@
 
 				<article class="prose basis-8/12 p-8 max-w-[100%]">
 					<h1>{{ lesson.docket.sections[0].title }}</h1>
-					<ContentRenderer :value="lesson.docket.sections[0].steps[0]">
-						<ContentRendererMarkdown :value="lesson.docket.sections[0].steps[0]" :excerpt="true" />
-					</ContentRenderer>
+					<ContentRenderer :value="lesson.docket.sections[0].steps[0]" :excerpt="true" />
 				</article>
 			</div>
 		</div>

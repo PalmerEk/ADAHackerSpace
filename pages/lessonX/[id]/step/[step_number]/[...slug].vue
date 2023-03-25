@@ -25,9 +25,7 @@
 				<div class="basis-9/12 p-8">
 					<article class="prose">
 						<h1>{{ step.section.title }}</h1>
-						<ContentRenderer :value="step.content">
-							<ContentRendererMarkdown :value="step.content" :excerpt="true" />
-						</ContentRenderer>
+						<ContentRenderer :value="step.content" :excerpt="true" />
 					</article>
 
 					<!-- Next/Prev -->

@@ -140,6 +140,7 @@ export const useWallet = (default_provider_key = "walletprovider", default_handl
 		const testnet = ref("testnet");
 		const balance = ref(null);
 		const address = ref(null);
+		const changeAddress = ref(null);
 		const ada_handles = ref([]);
 
 		// Helios
@@ -176,6 +177,7 @@ export const useWallet = (default_provider_key = "walletprovider", default_handl
 			testnet.value = "testnet";
 			balance.value = null;
 			address.value = null;
+			changeAddress.value = null;
 			ada_handles.value = [];
 
 			heliosCip30Wallet = null;
@@ -250,6 +252,8 @@ export const useWallet = (default_provider_key = "walletprovider", default_handl
 		};
 
 		const fetchNetwork = async () => {
+			if (network_id.value) return network.value;
+
 			network_id.value = await api.value?.getNetworkId();
 
 			// NOTE: Using heleos / blackfrost to do this for now
@@ -262,6 +266,8 @@ export const useWallet = (default_provider_key = "walletprovider", default_handl
 				const txOnNetwork = await $fetch(`/api/network/sniff/${refUtxo.txId.hex}`);
 				testnet.value = txOnNetwork?.network || "testnet";
 			}
+
+			return network.value;
 		};
 
 		const fetchBalance = async () => {
@@ -272,7 +278,8 @@ export const useWallet = (default_provider_key = "walletprovider", default_handl
 
 		const fetchChangeAddress = async () => {
 			const cborAdress = await api.value?.getChangeAddress();
-			address.value = bech32FromHex(cborAdress);
+			changeAddress.value = bech32FromHex(cborAdress);
+			return changeAddress.value;
 		};
 
 		// TODO: leaning on helios for this for now, but I think I can just get the utxos myself and sort them smallest to largest
@@ -420,12 +427,14 @@ export const useWallet = (default_provider_key = "walletprovider", default_handl
 			currency_symbol: readonly(currency_symbol),
 			balance: readonly(balance),
 			address: readonly(address),
+			changeAddress: readonly(changeAddress),
 			ada_handles: readonly(ada_handles),
 			ada_handle: readonly(ada_handle),
 
 			fetchUTXOs,
 			fetchChangeAddress,
 			pickUtxos,
+			fetchNetwork,
 
 			isReady: readonly(isReady),
 			isLoading: readonly(isLoading),

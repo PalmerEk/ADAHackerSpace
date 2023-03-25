@@ -30,6 +30,8 @@
 				<SiteHeaderSettings @close="settingsDialog = false" />
 			</v-dialog>
 
+			<SiteHeaderThemeChooser />
+
 			<!-- Social? -->
 			<!-- <v-menu>
         <template v-slot:activator="{ props }">

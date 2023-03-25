@@ -4,11 +4,19 @@
 			type: String,
 			default: "info",
 		},
+		title: {
+			type: String,
+			default: () => null,
+		},
+		icon: {
+			type: String,
+			default: () => null,
+		},
 	});
 </script>
 
 <template>
-	<div :class="`mb-4 rounded-lg text-base bg-${type}-100 py-5 px-6 text-${type}-600`" role="alert">
+	<v-alert :title="title" :icon="icon" :color="type">
 		<ContentSlot :use="$slots.default" unwrap="p" />
-	</div>
+	</v-alert>
 </template>

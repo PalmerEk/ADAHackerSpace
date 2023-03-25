@@ -38,5 +38,7 @@ GET http://localhost:3000/api/lessons
 GET http://localhost:3000/api/lessons/PalmerEk/jubilant-sniffle
 
 ###
-GET https://main--effervescent-halva-59ace7.netlify.app/api/lessons/PalmerEk/jubilant-sniffle
+GET http://localhost:3000/api/preview/txs/b95e7868db8ece525e8fde46780019b0c3587574fe9fae704671d0f2866e6c86
 
+###
+GET https://main--effervescent-halva-59ace7.netlify.app/api/lessons/PalmerEk/jubilant-sniffle

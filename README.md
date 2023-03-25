@@ -26,6 +26,7 @@ Rest of information stored in json file on ipfs?
 -   [ ] Determine if we need/want a DAO. XP could be used as governance tokens
 -   [ ] The thought is to keep the "docket" dynamic and out of the system. This means that translations and changes can be made, but is that a good thing?
 -   [ ] Need to be able to add images to IPFS for tokens. Could IPFS also be used to handle rewards or additional meta data? In order for that to work we would need things to be mutable in IPFS, need to know more about that.
+-   [ ] Add front matter templates for OpenGraph and Twitter Cards (see: https://gohugo.io/templates/internal/)
 
 ### Stuff to think about
 

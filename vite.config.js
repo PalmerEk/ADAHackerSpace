@@ -19,7 +19,6 @@ const moduleExclude = (match) => {
 export default defineConfig({
 	cacheDir: resolve(__dirname, ".vite"),
 	plugins: [moduleExclude("text-encoding"), wasm(), topLevelAwait()],
-
 	optimizeDeps: {
 		include: [
 			"gun",
