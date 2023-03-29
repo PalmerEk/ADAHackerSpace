@@ -1,10 +1,11 @@
 <script setup></script>
 
 <template>
-	<section>
-		<v-img cover src="/Workshop_cog.png">
-			<h1>ADA Hacker Space <br /><span>Cardano Training Ground</span></h1>
+	<v-parallax src="/Workshop_cog.png">
+		<div class="d-flex fill-height justify-center align-center text-white">
+			<h1 class="text-h4 font-weight-thin mb-4">ADA Hacker Space</h1>
+			<h4 class="subheading">Cardano Training Ground</h4>
 			<v-btn to="/lessons" prepend-icon="mdi-vuetify" ripple> Get Started </v-btn>
-		</v-img>
-	</section>
+		</div>
+	</v-parallax>
 </template>

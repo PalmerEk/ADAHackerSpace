@@ -102,8 +102,8 @@ Check out a **success** alert with `code` and a [link](#).
 Check out a **warning** alert with `code` and a [link](#).
 ::
 
-::alert{type="danger" style="margin-bottom: 0;"}
-Check out a **danger** alert with `code` and a [link](#).
+::alert{type="error" style="margin-bottom: 0;"}
+Check out a **error** alert with `code` and a [link](#).
 ::
 
 #Code
@@ -121,8 +121,8 @@ Check out a **success** alert with `code` and a [link](#).
 Check out a **warning** alert with `code` and a [link](#).
 ::
 
-::alert{type="danger"}
-Check out a **danger** alert with `code` and a [link](#).
+::alert{type="error"}
+Check out a **error** alert with `code` and a [link](#).
 ::
 ```
 

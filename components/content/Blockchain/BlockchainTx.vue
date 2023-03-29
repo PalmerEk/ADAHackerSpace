@@ -32,6 +32,7 @@
 						{{ txHash }}
 					</div>
 					<div v-else>
+						<!-- TODO: maybe use formkit instead? -->
 						<v-text-field v-model="txHash" clearable label="Tx Hash" variant="underlined" @blur="lookupTx"></v-text-field>
 					</div>
 					<template v-slot:actions>
@@ -40,7 +41,7 @@
 				</v-expansion-panel-title>
 				<v-expansion-panel-text>
 					<div v-if="loading">Loading...</div>
-					TODO: Style this
+					<!-- TODO: Style this -->
 					{{ tx }}
 				</v-expansion-panel-text>
 			</v-expansion-panel>
