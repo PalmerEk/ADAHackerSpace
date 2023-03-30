@@ -89,7 +89,7 @@ const fetchLessonOverview = async (repo) => {
 
 const getLessons = async () => {
 	// MOCK: Testing
-	const lessonAssets = ["PalmerEk/jubilant-sniffle"];
+	const lessonAssets = ["PalmerEk/expert-sniffle"];
 
 	lessonAssets.forEach((asset) => {
 		if (!lessonCache.has(asset)) lessonCache.set(asset, null); // Stuff in a placeholder
@@ -126,7 +126,7 @@ const fetchLesson = async (repo) => {
 	await Promise.all(
 		files
 			.filter((file) => file && file.endsWith(".md"))
-			.sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" }))
+			.sort((a, b) => a.localeCompare(b, { numeric: true, sensitivity: "base" }))
 			.map(async (path) => {
 				const md = await pfs.readFile(path, "utf8");
 				path = path.replace(dir, "");

@@ -24,10 +24,6 @@
 
 				if (section["overview"]) {
 					mappedSection = section.overview;
-					// mappedSection.title = section.overview.title;
-					// mappedSection.description = section.overview.description;
-					// mappedSection.excerpt = section.overview.excerpt;
-					// mappedSection._id = section.overview._id;
 				}
 
 				mappedSection.steps = Object.keys(section)
@@ -44,6 +40,7 @@
 						};
 					});
 
+				console.log(mappedSection.steps);
 				return mappedSection;
 			});
 	});

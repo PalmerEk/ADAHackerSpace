@@ -12,8 +12,8 @@
 <template>
 	<v-card>
 		<NuxtLink :to="`/lesson/overview/${lesson.id}`">
-			<v-img :src="overview.image" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" height="300px" cover>
-				<v-card-title class="text-white" v-text="overview.title"></v-card-title>
+			<v-img :src="overview.image" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" height="300" style="background-color: gray">
+				<v-card-title>{{ overview.title }}</v-card-title>
 			</v-img>
 		</NuxtLink>
 
