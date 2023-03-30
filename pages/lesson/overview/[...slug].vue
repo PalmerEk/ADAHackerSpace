@@ -52,7 +52,9 @@
 		<h1>{{ overview.title }}</h1>
 		<v-img :src="overview.image" class="align-end" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" height="400px" cover> </v-img>
 
-		<ul>
+		<ContentRenderer :value="overview"> </ContentRenderer>
+
+		<!-- <ul>
 			<li v-for="section in sections" :key="section._id">
 				<h2>{{ section.title }}</h2>
 
@@ -60,7 +62,7 @@
 					<ContentRenderer :value="section" :excerpt="true"> </ContentRenderer>
 				</p>
 			</li>
-		</ul>
+		</ul> -->
 
 		<v-btn :to="`/lesson/${lessonURL}/${sections[0].title}/${sections[0].steps[0].title}`">Lets Go!</v-btn>
 	</NuxtLayout>
