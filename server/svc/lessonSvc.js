@@ -120,7 +120,7 @@ const fetchLesson = async (repo) => {
 
 	const files = await fsRecursive(dir);
 
-	const lessonTree = {};
+	const lessonTree = { root: repo };
 
 	// Loop through files and parse markdown
 	await Promise.all(

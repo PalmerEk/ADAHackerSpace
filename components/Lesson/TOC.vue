@@ -14,10 +14,14 @@
 		},
 	});
 
+	const root = computed(() => {
+		return "PalmerEk/expert-sniffle";
+	});
+
 	const sections = computed(() => {
 		return Object.keys(props.lesson)
 			.filter((k) => {
-				return k !== "overview";
+				return k !== "overview" && k !== "root";
 			})
 			.map((k, i) => {
 				const section = props.lesson[k];
@@ -76,7 +80,7 @@
 					<v-timeline side="end" align="start" :line-thickness="0">
 						<v-timeline-item v-for="step in section.steps" :key="step._id" icon-color="gray" icon="mdi-lock-outline" :size="5" density="compact">
 							<div class="d-flex">
-								<NuxtLink :to="`/lesson/PalmerEk/jubilant-sniffle/${section.title}/${step.title}`" :class="[{ active: isActiveStep(step) }]">
+								<NuxtLink :to="`/lesson/${root}/${section.title}/${step.title}`" :class="[{ active: isActiveStep(step) }]">
 									{{ step.title }}
 								</NuxtLink>
 							</div>

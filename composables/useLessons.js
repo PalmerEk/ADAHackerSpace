@@ -48,6 +48,7 @@ export const useLessons = createGlobalState(() => {
 				return bestLang;
 			}, "en");
 
+			// return { ...lesson[language.value], root: lesson.root };
 			return lesson[language.value];
 		} catch (err) {
 			error.value = err;
