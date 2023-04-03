@@ -1,47 +1,47 @@
 <script setup>
-	// TODO: Remove need for helios wallet
-	import { Cip30Wallet, WalletHelper } from "@hyperionbt/helios";
-	import { Value, Tx, Program, ByteArrayData, hexToBytes, ConstrData, Assets, Address, TxOutput, NetworkParams } from "@hyperionbt/helios";
+	// // TODO: Remove need for helios wallet
+	// import { Cip30Wallet, WalletHelper } from "@hyperionbt/helios";
+	// import { Value, Tx, Program, ByteArrayData, hexToBytes, ConstrData, Assets, Address, TxOutput, NetworkParams } from "@hyperionbt/helios";
 
-	const optimize = false; // TODO: set based on process.env.NODE_ENV
-	const wallet = useWallet();
+	// const optimize = false; // TODO: set based on process.env.NODE_ENV
+	// const wallet = useWallet();
 
-	const mintData = ref({
-		tokenName: "XP",
-	});
+	// const mintData = ref({
+	// 	tokenName: "XP",
+	// });
 
-	definePageMeta({
-		middleware: "auth-admin",
-	});
+	// definePageMeta({
+	// 	middleware: "auth-admin",
+	// });
 
-	//const tokenName = ref(undefined);
+	// //const tokenName = ref(undefined);
 
-	const mint = async (data) => {
-		console.log(data);
+	// const mint = async (data) => {
+	// 	console.log(data);
 
-		// tx
-		// .mintTokens(
-		//     uplcProgram.mintingPolicyHash,
-		//     [["my_first_nft", 1n], ["my_second_nft", 1n]],
-		//     redeemerData // can be generated using program.evalParam("...").data
-		// )
-		// .attachScript(uplcProgram)
+	// 	// tx
+	// 	// .mintTokens(
+	// 	//     uplcProgram.mintingPolicyHash,
+	// 	//     [["my_first_nft", 1n], ["my_second_nft", 1n]],
+	// 	//     redeemerData // can be generated using program.evalParam("...").data
+	// 	// )
+	// 	// .attachScript(uplcProgram)
 
-		// console.log("minting");
+	// 	// console.log("minting");
 
-		// const mintScript = `minting signed
+	// 	// const mintScript = `minting signed
 
-		// const OWNER: PubKeyHash = PubKeyHash::new(#3e384a5787cca03174f5dc7c267e59aa58b6d2b8eb63652a415537a3)
+	// 	// const OWNER: PubKeyHash = PubKeyHash::new(#3e384a5787cca03174f5dc7c267e59aa58b6d2b8eb63652a415537a3)
 
-		// func main(_, ctx: ScriptContext) -> Bool {
-		// 		ctx.tx.is_signed_by(OWNER)
-		// }`;
+	// 	// func main(_, ctx: ScriptContext) -> Bool {
+	// 	// 		ctx.tx.is_signed_by(OWNER)
+	// 	// }`;
 
-		// // Compile the helios minting script
-		// const mintProgram = Program.new(mintScript).compile(true);
-		// const lcMPH = mintProgram.mintingPolicyHash;
-		// console.log(lcMPH.hex);
-	};
+	// 	// // Compile the helios minting script
+	// 	// const mintProgram = Program.new(mintScript).compile(true);
+	// 	// const lcMPH = mintProgram.mintingPolicyHash;
+	// 	// console.log(lcMPH.hex);
+	// };
 </script>
 
 <template>

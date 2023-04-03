@@ -1,7 +1,7 @@
 // TDOO: Consider just using helios library directly?
 //import { TransactionUnspentOutput, Address, Value } from "@emurgo/cardano-serialization-lib-asmjs/cardano_serialization_lib";
 import { TransactionUnspentOutput, Address, Value } from "@emurgo/cardano-serialization-lib-browser/cardano_serialization_lib";
-import { Cip30Wallet, WalletHelper } from "@hyperionbt/helios";
+// import { Cip30Wallet, WalletHelper } from "@hyperionbt/helios";
 import { Buffer } from "buffer";
 
 const ERROR_CLIENT_ONLY = new Error("Wallets not supported on server");
@@ -144,8 +144,8 @@ export const useWallet = (default_provider_key = "walletprovider", default_handl
 		const ada_handles = ref([]);
 
 		// Helios
-		let heliosCip30Wallet = null;
-		let heliosWalletHelper = null;
+		// let heliosCip30Wallet = null;
+		// let heliosWalletHelper = null;
 
 		// Computed
 		const isConnected = computed(() => api.value !== null);
@@ -180,8 +180,8 @@ export const useWallet = (default_provider_key = "walletprovider", default_handl
 			changeAddress.value = null;
 			ada_handles.value = [];
 
-			heliosCip30Wallet = null;
-			heliosWalletHelper = null;
+			// heliosCip30Wallet = null;
+			// heliosWalletHelper = null;
 		};
 
 		// Wallet API
@@ -205,7 +205,7 @@ export const useWallet = (default_provider_key = "walletprovider", default_handl
 					// signTx,
 					// submitTx,
 
-					heliosCip30Wallet = new Cip30Wallet(api.value);
+					// heliosCip30Wallet = new Cip30Wallet(api.value);
 					//submitTx,
 					//isMainnet
 					//signTx
@@ -213,7 +213,7 @@ export const useWallet = (default_provider_key = "walletprovider", default_handl
 					//unusedAddresses
 					//usedAddresses
 
-					heliosWalletHelper = new WalletHelper(heliosCip30Wallet);
+					// heliosWalletHelper = new WalletHelper(heliosCip30Wallet);
 					//allAddresses
 					//baseAddress
 					//changeAddress
@@ -258,6 +258,7 @@ export const useWallet = (default_provider_key = "walletprovider", default_handl
 
 			// NOTE: Using heleos / blackfrost to do this for now
 			// I think I can ignore heleos wallet and just get the utxos myself in which case I'm down to blockfrost somehow?
+			/*
 			if (network_id.value === 0) {
 				// TODO: just use the first utxo?
 				const refUtxo = await heliosWalletHelper.refUtxo;
@@ -266,6 +267,7 @@ export const useWallet = (default_provider_key = "walletprovider", default_handl
 				const txOnNetwork = await $fetch(`/api/network/sniff/${refUtxo.txId.hex}`);
 				testnet.value = txOnNetwork?.network || "testnet";
 			}
+			*/
 
 			return network.value;
 		};
@@ -283,9 +285,9 @@ export const useWallet = (default_provider_key = "walletprovider", default_handl
 		};
 
 		// TODO: leaning on helios for this for now, but I think I can just get the utxos myself and sort them smallest to largest
-		const pickUtxos = async (amount) => {
-			return await heliosWalletHelper.pickUtxos(amount);
-		};
+		// const pickUtxos = async (amount) => {
+		// 	return await heliosWalletHelper.pickUtxos(amount);
+		// };
 
 		const fetchFirstUsedAddress = async () => {
 			const cborAdress = (await api.value?.getUsedAddresses())[0];
@@ -433,7 +435,7 @@ export const useWallet = (default_provider_key = "walletprovider", default_handl
 
 			fetchUTXOs,
 			fetchChangeAddress,
-			pickUtxos,
+			//pickUtxos,
 			fetchNetwork,
 
 			isReady: readonly(isReady),

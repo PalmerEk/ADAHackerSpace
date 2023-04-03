@@ -20,17 +20,6 @@ export default defineConfig({
 	cacheDir: resolve(__dirname, ".vite"),
 	plugins: [moduleExclude("text-encoding"), wasm(), topLevelAwait()],
 	optimizeDeps: {
-		include: [
-			"gun",
-			"gun/gun",
-			"gun/sea",
-			"gun/sea.js",
-			"gun/lib/then",
-			"gun/lib/webrtc",
-			"gun/lib/radix",
-			"gun/lib/radisk",
-			"gun/lib/store",
-			"gun/lib/rindexed",
-		],
+		include: [],
 	},
 });

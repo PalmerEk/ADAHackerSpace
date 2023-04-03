@@ -1,7 +1,17 @@
-<template>
-	<v-navigation-drawer>
-		<slot name="toc" />
-	</v-navigation-drawer>
+<script setup></script>
 
-	<slot />
+<template>
+	<v-app>
+		<SiteHeader />
+
+		<slot name="toc" />
+
+		<v-main>
+			<v-container>
+				<slot />
+			</v-container>
+		</v-main>
+
+		<slot name="contents" />
+	</v-app>
 </template>
