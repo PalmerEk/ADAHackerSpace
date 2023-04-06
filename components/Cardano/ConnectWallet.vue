@@ -4,6 +4,7 @@
 	// todo: add slot to override rendering of the wallet menu
 
 	const wallet = useWallet();
+	const showHandleChooser = useState("showHandleChooser", () => false);
 </script>
 
 <template>
@@ -35,7 +36,7 @@
 								<v-progress-circular v-else indeterminate color="primary" />
 								|
 								<span v-if="wallet.ada_handle"><v-icon icon="mdi-currency-usd" style="color: #0cd15b" />{{ wallet.ada_handle }}</span>
-								<span v-else>{{ wallet.address?.slice(0, 6) }}...{{ wallet.address?.slice(-6) }}</span>
+								<span v-else>{{ wallet.changeAddress?.slice(0, 6) }}...{{ wallet.changeAddress?.slice(-6) }}</span>
 							</span>
 						</v-btn>
 					</slot>
@@ -44,5 +45,7 @@
 				<CardanoWalletCard />
 			</v-menu>
 		</div>
+
+		<CardanoChooseADAHandle v-model="showHandleChooser" />
 	</client-only>
 </template>

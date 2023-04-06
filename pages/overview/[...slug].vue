@@ -46,7 +46,7 @@
 		<div>
 			<v-breadcrumbs :items="breadcrumbs"></v-breadcrumbs>
 
-			<v-img :src="content.image"></v-img>
+			<v-img :src="content.image" :aspectRatio="1.7778"></v-img>
 
 			<ContentRenderer :value="content">
 				<ContentRendererMarkdown :value="content" />

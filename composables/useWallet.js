@@ -1,7 +1,5 @@
-// TDOO: Consider just using helios library directly?
 //import { TransactionUnspentOutput, Address, Value } from "@emurgo/cardano-serialization-lib-asmjs/cardano_serialization_lib";
 import { TransactionUnspentOutput, Address, Value } from "@emurgo/cardano-serialization-lib-browser/cardano_serialization_lib";
-// import { Cip30Wallet, WalletHelper } from "@hyperionbt/helios";
 import { Buffer } from "buffer";
 
 const ERROR_CLIENT_ONLY = new Error("Wallets not supported on server");
@@ -143,10 +141,6 @@ export const useWallet = (default_provider_key = "walletprovider", default_handl
 		const changeAddress = ref(null);
 		const ada_handles = ref([]);
 
-		// Helios
-		// let heliosCip30Wallet = null;
-		// let heliosWalletHelper = null;
-
 		// Computed
 		const isConnected = computed(() => api.value !== null);
 		const network = computed(() => {
@@ -179,9 +173,6 @@ export const useWallet = (default_provider_key = "walletprovider", default_handl
 			address.value = null;
 			changeAddress.value = null;
 			ada_handles.value = [];
-
-			// heliosCip30Wallet = null;
-			// heliosWalletHelper = null;
 		};
 
 		// Wallet API
@@ -204,24 +195,6 @@ export const useWallet = (default_provider_key = "walletprovider", default_handl
 					// signData,
 					// signTx,
 					// submitTx,
-
-					// heliosCip30Wallet = new Cip30Wallet(api.value);
-					//submitTx,
-					//isMainnet
-					//signTx
-					//utxos
-					//unusedAddresses
-					//usedAddresses
-
-					// heliosWalletHelper = new WalletHelper(heliosCip30Wallet);
-					//allAddresses
-					//baseAddress
-					//changeAddress
-					//refUtxo
-					//isOwnAddress
-					//isOwnPubKeyHash
-					//pickUtxos
-					//pickCollateral
 
 					localStorage.setItem(default_provider_key, provider);
 
@@ -251,23 +224,28 @@ export const useWallet = (default_provider_key = "walletprovider", default_handl
 			isConnected.value && provider === wallet.value?.provider ? disconnect() : connect(provider);
 		};
 
+		// Only way I can figure out how to get which testnet we're on is by grabbing a random utxo and
+		// calling the API (blockfrost) to see if the txid exists on each of the networks
 		const fetchNetwork = async () => {
 			if (network_id.value) return network.value;
 
 			network_id.value = await api.value?.getNetworkId();
 
-			// NOTE: Using heleos / blackfrost to do this for now
-			// I think I can ignore heleos wallet and just get the utxos myself in which case I'm down to blockfrost somehow?
-			/*
 			if (network_id.value === 0) {
-				// TODO: just use the first utxo?
-				const refUtxo = await heliosWalletHelper.refUtxo;
-				if (refUtxo === null) testnet.value = "testnet"; // empty wallet, can't determine testnet
+				testnet.value = "testnet"; // default (empty wallet?)
 
-				const txOnNetwork = await $fetch(`/api/network/sniff/${refUtxo.txId.hex}`);
-				testnet.value = txOnNetwork?.network || "testnet";
+				// TODO: pick a random utxo and check the network
+				const refUtxos = await api.value?.getUtxos(null, { page: 0, limit: 1 });
+				if (refUtxos?.length) {
+					const refUtxo = refUtxos[0];
+					const utxo = TransactionUnspentOutput.from_bytes(Buffer.from(refUtxo, "hex"));
+					const input = utxo.input();
+					const txid = Buffer.from(input.transaction_id().to_bytes(), "utf8").toString("hex");
+
+					const txOnNetwork = await $fetch(`/api/network/sniff/${txid}`);
+					testnet.value = txOnNetwork?.network || "testnet";
+				}
 			}
-			*/
 
 			return network.value;
 		};
@@ -281,10 +259,12 @@ export const useWallet = (default_provider_key = "walletprovider", default_handl
 		const fetchChangeAddress = async () => {
 			const cborAdress = await api.value?.getChangeAddress();
 			changeAddress.value = bech32FromHex(cborAdress);
+			console.log("changeAddress", changeAddress.value);
 			return changeAddress.value;
 		};
 
 		// TODO: leaning on helios for this for now, but I think I can just get the utxos myself and sort them smallest to largest
+		// Actually more complicated than that but for sure can do it without the dependency
 		// const pickUtxos = async (amount) => {
 		// 	return await heliosWalletHelper.pickUtxos(amount);
 		// };

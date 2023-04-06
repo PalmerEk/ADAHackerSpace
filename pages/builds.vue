@@ -6,9 +6,12 @@
 	const language = languages.value[0].slice(0, 2);
 
 	// Fetch all the lessons for the current language
-	// TODO: Can I add a _dir.yaml with draft: draft to the root level to filter out drafts in production only?
 	const { data: navigation } = await useAsyncData("navigation", () => {
-		return fetchContentNavigation(queryContent(`/lessons/${language}`).sort({ date: -1 }));
+		return fetchContentNavigation(
+			queryContent(`/lessons/${language}`)
+				//.where({ published: { $exists: true } })
+				.sort({ date: -1 })
+		);
 	});
 
 	// We can skip the top 2 levels (lessons and language)

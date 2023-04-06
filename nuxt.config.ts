@@ -30,7 +30,7 @@ export default defineNuxtConfig({
 			},
 		},
 		navigation: {
-			fields: ["author", "publishedAt", "title", "description", "tags", "image", "level", "categories", "duration"],
+			fields: ["author", "publishedAt", "title", "description", "tags", "image", "level", "categories", "duration", "draft"],
 		},
 		ignores: ["LICENSE"],
 		defaultLocale: "en",

@@ -72,14 +72,14 @@
 					<v-spacer />
 					<ClientOnly>
 						<v-btn icon title="Copy link" @click.prevent="copyLink" variant="text">
-							<icon v-if="copied" name="mdi:link-variant-plus" :size="24" />
-							<icon v-else name="mdi:link-variant" :size="24" />
+							<icon v-if="copied" name="mdi:link-variant-plus" size="24" />
+							<icon v-else name="mdi:link-variant" size="24" />
 						</v-btn>
 					</ClientOnly>
 
 					<v-btn icon title="Edit on Github" variant="text">
 						<a :href="githubLink" target="_blank">
-							<icon name="mdi:github" :size="24" />
+							<icon name="mdi:github" size="24" />
 						</a>
 					</v-btn>
 				</v-breadcrumbs>

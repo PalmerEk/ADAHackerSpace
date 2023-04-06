@@ -1,7 +1,8 @@
 <script setup>
-	import { useClipboard, usePermission } from "@vueuse/core";
+	import { useClipboard } from "@vueuse/core";
 
 	const { isSupported: isClipboardSupported, copy, copied } = useClipboard();
+	const showHandleChooser = useState("showHandleChooser", () => false);
 
 	const wallet = useWallet();
 
@@ -11,12 +12,6 @@
 
 	const copyAddress = () => {
 		copy(wallet.value.address);
-	};
-
-	const changeHandle = () => {
-		// TODO: Available handles popup
-		//wallet.value.setDefaultHandle()
-		//wallet.value.changeHandle();
 	};
 </script>
 
@@ -35,20 +30,25 @@
 					<div class="font-weight-light">{{ wallet.network }}</div>
 					<div v-if="wallet.ada_handle">
 						${{ wallet.ada_handle }}
-						<v-button v-if="wallet.ada_handles.length > 1" @click.prevent="changeHandle">
+						<v-btn v-if="wallet.ada_handles.length > 1" variant="text" @click="showHandleChooser = true">
 							<span v-if="wallet.ada_handle"><v-icon icon="mdi-currency-usd" style="color: #0cd15b" />Change</span>
-						</v-button>
-						<v-button v-if="isClipboardSupported" class="ml-2" @click="copyHandle">
+						</v-btn>
+
+						<v-btn v-if="isClipboardSupported" variant="text" @click="copyHandle">
 							<v-icon v-if="!copied" icon="mdi-content-copy" />
 							<span v-else>Copied!</span>
-						</v-button>
+						</v-btn>
 					</div>
 					<div v-else>
-						{{ wallet.address?.slice(0, 6) }}...{{ wallet.address?.slice(-6) }}
-						<v-button v-if="isClipboardSupported" class="ml-2" @click="copyAddress">
+						{{ wallet.changeAddress?.slice(0, 6) }}...{{ wallet.changeAddress?.slice(-6) }}
+						<v-btn v-if="wallet.ada_handles.length > 1" variant="text" @click="showHandleChooser = true">
+							<v-icon icon="mdi-currency-usd" style="color: #0cd15b" />ADAHandle
+						</v-btn>
+
+						<v-btn v-if="isClipboardSupported" variant="text" @click="copyAddress">
 							<v-icon v-if="!copied" icon="mdi-content-copy" />
 							<span v-else>Copied!</span>
-						</v-button>
+						</v-btn>
 					</div>
 				</div>
 			</v-card-title>
