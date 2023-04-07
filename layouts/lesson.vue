@@ -7,7 +7,7 @@
 		<slot name="toc" />
 
 		<v-main>
-			<v-container>
+			<v-container class="prose">
 				<slot />
 			</v-container>
 		</v-main>

@@ -81,18 +81,6 @@ const foo = "bar";
 
 # MD Examples
 
-## Components
-
-::group
-::MyButton{type="info"}
-Info Button
-::
-
-::MyButton{type="success"}
-Success Button
-::
-::
-
 ### ::alert
 
 ::alert{type="primary"}

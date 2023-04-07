@@ -259,7 +259,6 @@ export const useWallet = (default_provider_key = "walletprovider", default_handl
 		const fetchChangeAddress = async () => {
 			const cborAdress = await api.value?.getChangeAddress();
 			changeAddress.value = bech32FromHex(cborAdress);
-			console.log("changeAddress", changeAddress.value);
 			return changeAddress.value;
 		};
 

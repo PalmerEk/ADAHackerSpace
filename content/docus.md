@@ -1,3 +1,7 @@
+---
+title: Docus
+---
+
 # Components
 
 Discover every component you can use in your content.
