@@ -1,15 +1,14 @@
-<script setup>
-	const props = defineProps({
-		lesson: {
-			type: Object,
-			required: true,
-		},
-	});
+<script setup lang="ts">
+	import { Lesson } from '~/interfaces/Lesson.interface'
+
+	const props = defineProps<{
+		lesson: Lesson
+	}>()
 
 	// We really just want the overview
 	const overview = computed(() => {
-		return props.lesson.children[0];
-	});
+		return props.lesson.children[0]
+	})
 </script>
 
 <template>
@@ -18,8 +17,11 @@
 			<v-card-title>{{ overview.title }}</v-card-title>
 		</v-img>
 
+		<!-- TODO: link to author -->
+		<v-card-subtitle class="mt-3">Author: {{ overview.author }}</v-card-subtitle>
+
 		<v-card-text>
-			<p>{{ overview.description }}</p>
+			<p class="mb-3">{{ overview.description }}</p>
 
 			<!-- TODO: Filter by tag -->
 			<v-chip-group>
@@ -31,19 +33,34 @@
 				<v-chip v-for="category in overview.categories" :key="category">{{ category }}</v-chip>
 			</v-chip-group>
 
-			<div>duration: {{ overview.duration }}</div>
+			<v-row class="mt-3">
+				<v-col>
+					<div class="text-center bg-primary px-2 py-1 rounded">
+						<div class="text-overline">duration</div>
+						<div class="text-h6">{{ overview.duration }}</div>
+					</div>
+				</v-col>
 
-			<!-- TODO: Filter by level -->
-			<div>minutes level: {{ overview.level }}</div>
-
-			<!-- TODO: link to author -->
-			<div>author: {{ overview.author }}</div>
-
-			<hr />
+				<v-col>
+					<!-- TODO: Filter by level -->
+					<div class="text-center bg-primary py-1 rounded">
+						<div class="text-overline">minutes level</div>
+						<div class="text-h6">{{ overview.level }}</div>
+					</div>
+				</v-col>
+			</v-row>
 		</v-card-text>
 
 		<v-card-actions>
-			<v-btn color="success" :to="`/overview${overview._path}`"> View Build </v-btn>
+			<v-btn class="custom-button" color="primary" :to="`/overview${overview._path}`"> View Build </v-btn>
 		</v-card-actions>
 	</v-card>
 </template>
+
+<style scoped lang="scss">
+	.custom-button {
+		position: absolute;
+		bottom: 10px;
+		left: 10px;
+	}
+</style>

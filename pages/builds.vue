@@ -23,8 +23,16 @@
 <template>
 	<NuxtLayout>
 		<v-container fluid>
-			<v-row dense>
-				<v-col v-for="lesson in lessons" :key="lesson._path" :cols="4">
+			<v-row>
+				<v-col 
+					v-for="lesson in lessons" 
+					:key="lesson._path" 
+					cols="12"
+					sm="6"
+					lg="4"
+					xl="3"
+					class="d-flex mb-5"
+				>
 					<LessonCard :lesson="lesson" />
 				</v-col>
 			</v-row>

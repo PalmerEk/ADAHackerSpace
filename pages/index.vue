@@ -17,7 +17,6 @@
 					ripple
 					size="large"
 					block
-					rounded="10"
 				>
 					Start Hacking
 				</v-btn>
