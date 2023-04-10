@@ -5,7 +5,7 @@
 </script>
 
 <template>
-	<v-app-bar app extended>
+	<v-app-bar app>
 		<v-app-bar-nav-icon>
 			<NuxtLink to="/"><v-icon icon="mdi-gavel"></v-icon></NuxtLink>
 		</v-app-bar-nav-icon>
