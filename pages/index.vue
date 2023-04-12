@@ -1,74 +1,78 @@
 <script setup></script>
 
 <template>
-	<NuxtLayout>
-		<div class="custom-grid">
-			<div class="col-1"></div>
-			<div class="col-2">
-				<div class="card">
-					<img src="/Workshop_cog.png" class="mb-7" />
-
-					<h2>ADA Hacker Space</h2>
-					<h4 class="mt-1 mb-14 text-medium-emphasis">Cardano Training Ground</h4>
-					<v-btn 
-						to="/builds" 
-						ripple
-						size="large"
-						block
-						rounded="10"
-					>
-						Get Started 
-					</v-btn>
-				</div>
+	<div class="custom-grid">
+		<div class="col-1"></div>
+		<div class="col-2">
+			<div class="d-flex header-div">
+				<CardanoConnectWallet />
+				<SiteHeaderThemeChooser />
+			</div>
+			
+			<div class="text-center custom-div">
+				<h1>ADA Hacker Space</h1>
+				<h3 class="mt-1 mb-14 text-medium-emphasis">Cardano Training Ground</h3>
+				<v-btn 
+					to="/builds" 
+					ripple
+					size="large"
+					block
+				>
+					Start Hacking
+				</v-btn>
 			</div>
 		</div>
-	</NuxtLayout>
+	</div>
 </template>
 
 <style scoped lang="scss">
 	.custom-grid {
 		display: grid;
-		grid-template-columns: 75% 25%;
-		height: calc(100vh - 112px);
+		grid-template-columns: repeat(2, 1fr);
+		grid-template-rows: auto;
+		height: 100vh;
+
+		@media screen and (max-width: 900px) {
+			grid-template-columns: auto;
+			grid-template-rows: repeat(2, 50vh);
+		}
 
 		.col-1 {
 			background-image: url('/splash-img.png');
 			background-size: cover;
 			background-position: top;
+			order: 1;
 		}
 
 		.col-2 {
 			display: grid;
 			place-items: center;
 			position: relative;
+			order: 2;
+			padding-bottom: 0;
 
-			.card {
-				padding: 2rem;
-				border-radius: 10px;
-				background-color: rgba(0, 0, 0, 0.85);
-				min-width: 350px;
-				text-align: center;
-				animation: slide-left 1s ease-in-out;
-				border: 2px solid #bb86fc;
+			@media screen and (max-width: 900px) {
+				order: 0;
+				place-items: end center;
+				padding-bottom: 2rem;
+			}
+
+			.header-div {
 				position: absolute;
-				left: -175px;
+				top: 0;
+				right: 0;
+				padding: 0.5rem 1rem;
+				gap: 1rem;
+			}
 
-				img {
-					max-width: 275px;
-					margin: auto;
-					animation: spin 1.25s ease-in-out;
-				}
+			.custom-div {
+				animation: fade-in 1.15s linear;
 			}
 		}
 	}
 
-	@keyframes spin {
-		from { transform: rotate(0deg) }
-		to { transform: rotate(360deg) }
-	}
-
-	@keyframes slide-left {
-		from { transform: translateX(600px) }
-		to { transform: translateX(0px) }
+	@keyframes fade-in {
+		from { filter: blur(14px); opacity: 0; }
+		to { filter: blur(0px); opacity: 1; }
 	}
 </style>
