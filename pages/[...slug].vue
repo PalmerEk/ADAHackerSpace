@@ -91,23 +91,19 @@
 				<ContentRenderer :value="content">
 					<ContentRendererMarkdown :value="content" />
 				</ContentRenderer>
-
-				<!-- TODO: Submit requirements after each section before being allowed to continue? -->
 			</v-col>
 		</v-row>
 
 		<v-container>
 			<v-row>
+				<!-- TODO: Submit requirements after each section before being allowed to continue IF lesson yaml contains proof? -->
 				<v-col cols="6" sm="6">
-					<!-- TODO: Submit requirements after each section before being allowed to continue? -->
-
 					<v-btn v-if="prev && prev._path !== overview._path" variant="outlined" rounded="xl" size="large" :to="prev._path">
 						<icon name="mdi:arrow-left-bold" /> {{ prev.title }}
 					</v-btn>
 				</v-col>
 
 				<v-col cols="6" sm="6">
-					<!-- TODO: Submit requirements after each section before being allowed to continue? -->
 					<v-btn v-if="next" class="float-right" variant="outlined" rounded="xl" size="large" :to="next._path">
 						{{ next.title }} <icon name="mdi:arrow-right-bold" />
 					</v-btn>

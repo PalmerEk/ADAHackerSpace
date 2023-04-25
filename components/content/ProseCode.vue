@@ -76,9 +76,6 @@
 
 <template>
 	<v-container class="rounded-lg my-0 w-full pt-0">
-		Props:
-		<pre>{{ props }}</pre>
-
 		<div class="mt-8 rounded-lg">
 			<div class="border border-outline-opaque rounded-xl overflow-hidden" style="background-color: #1b1917">
 				<div class="max-h-96 overflow-y-auto" style="background-color: #1f2937">

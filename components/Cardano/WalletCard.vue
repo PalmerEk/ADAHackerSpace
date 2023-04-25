@@ -11,12 +11,10 @@
 	};
 
 	const copyAddress = () => {
-		copy(wallet.value.address);
+		copy(wallet.value.changeAddress);
 	};
 </script>
 
-<!-- TODO: Add link to explorer https://cardanoscan.io/address/${addr} (preview.cardanoscan.io / preprod.cardanoscan.io) -->
-<!-- TODO: Add copy address as well as handle?  Or maybe copy is always address (resolved handle) -->
 <template>
 	<!---Wallet - User / Connect-->
 	<client-only>
@@ -28,10 +26,11 @@
 				<div class="ml-4">
 					<div class="font-weight-bold">{{ wallet.wallet?.name }}</div>
 					<div class="font-weight-light">{{ wallet.network }}</div>
+
 					<div v-if="wallet.ada_handle">
 						${{ wallet.ada_handle }}
 						<v-btn v-if="wallet.ada_handles.length > 1" variant="text" @click="showHandleChooser = true">
-							<span v-if="wallet.ada_handle"><v-icon icon="mdi-currency-usd" style="color: #0cd15b" />Change</span>
+							<span v-if="wallet.ada_handle"><v-icon icon="mdi-currency-usd" style="color: #0cd15b" />ADAHandle</span>
 						</v-btn>
 
 						<v-btn v-if="isClipboardSupported" variant="text" @click="copyHandle">
@@ -39,12 +38,17 @@
 							<span v-else>Copied!</span>
 						</v-btn>
 					</div>
-					<div v-else>
-						{{ wallet.changeAddress?.slice(0, 6) }}...{{ wallet.changeAddress?.slice(-6) }}
-						<v-btn v-if="wallet.ada_handles.length > 1" variant="text" @click="showHandleChooser = true">
-							<v-icon icon="mdi-currency-usd" style="color: #0cd15b" />ADAHandle
-						</v-btn>
-
+					<div>
+						<a
+							:href="
+								wallet.network == 'preview'
+									? `https://preview.cardanoscan.io/address/${wallet.changeAddress}`
+									: `https://preprod.cardanoscan.io/address/${wallet.changeAddress}`
+							"
+							target="_blank"
+						>
+							{{ wallet.changeAddress?.slice(0, 6) }}...{{ wallet.changeAddress?.slice(-6) }}
+						</a>
 						<v-btn v-if="isClipboardSupported" variant="text" @click="copyAddress">
 							<v-icon v-if="!copied" icon="mdi-content-copy" />
 							<span v-else>Copied!</span>

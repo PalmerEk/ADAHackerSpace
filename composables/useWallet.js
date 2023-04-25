@@ -182,9 +182,9 @@ export const useWallet = (default_provider_key = "walletprovider", default_handl
 
 			wallet.value = SUPPORTED_WALLETS.filter((wallet) => wallet.provider === provider)[0];
 
-			if (wallet.value?.installed && window.cardano[wallet.value?.provider]) {
+			if (wallet.value?.installed && window.parent.cardano[wallet.value?.provider]) {
 				try {
-					api.value = await window.cardano[wallet.value?.provider].enable();
+					api.value = await window.parent.cardano[wallet.value?.provider].enable();
 					// getNetworkId,
 					// getBalance,
 					// getUtxos,
@@ -416,6 +416,7 @@ export const useWallet = (default_provider_key = "walletprovider", default_handl
 			fetchChangeAddress,
 			//pickUtxos,
 			fetchNetwork,
+			reset: reset_state,
 
 			isReady: readonly(isReady),
 			isLoading: readonly(isLoading),

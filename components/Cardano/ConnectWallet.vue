@@ -1,15 +1,31 @@
 <script setup>
 	// todo: emit error and connected events
-	// todo: add slot to override rendering of the wallet button
-	// todo: add slot to override rendering of the wallet menu
 
 	const wallet = useWallet();
 	const showHandleChooser = useState("showHandleChooser", () => false);
+
+	const showError = computed({
+		get() {
+			return wallet.value?.error != null;
+		},
+		set(value) {
+			wallet.value.reset();
+		},
+	});
 </script>
 
 <template>
 	<!---Wallet - User / Connect-->
 	<client-only>
+		<v-snackbar v-model="showError" multi-line location="top right">
+			{{ wallet.error }}
+			(is wallet dapp connector enabled?) TODO: Add help link maybe based on wallet?
+
+			<template v-slot:actions>
+				<v-btn color="red" variant="text" @click="showError = false"> Close </v-btn>
+			</template>
+		</v-snackbar>
+
 		<div class="d-flex justify-center align-center">
 			<!-- Waiting to init wallets -->
 			<v-progress-circular v-if="!wallet.isReady" indeterminate color="primary" />
